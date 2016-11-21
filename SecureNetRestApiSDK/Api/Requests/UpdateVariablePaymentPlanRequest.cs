@@ -10,7 +10,7 @@ namespace SecureNetRestApiSDK.Api.Requests
 
         public string CustomerId { get; set; }
         public string PlanId { get; set; }
-        public object Plan { get; set; }
+        public StoredVariablePaymentPlan Plan { get; set; }
         public DeveloperApplication DeveloperApplication { get; set; }
 
         #endregion
@@ -19,7 +19,7 @@ namespace SecureNetRestApiSDK.Api.Requests
 
         public override string GetUri()
         {
-            return String.Format("api/customers/{0}/PaymentSchedules/variable/{1}", CustomerId, Plan);
+            return String.Format("api/customers/{0}/PaymentSchedules/variable/{1}", CustomerId, PlanId);
         }
 
         public override HttpMethodEnum GetMethod()

@@ -10,6 +10,7 @@ namespace SecureNetRestApiSDK.Api.Requests
         public decimal Amount { get; set; }
         public Card Card { get; set; }
         public DeveloperApplication DeveloperApplication { get; set; }
+        public ExtendedInformation ExtendedInformation { get; set; }
 
         #endregion
 

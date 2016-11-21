@@ -16,6 +16,9 @@ namespace SecureNetRestApiSDK.Api.Models
         [JsonProperty("amount")]
         public decimal Amount { get; set; }
 
+        [JsonProperty("softDescriptor")]
+        public string SoftDescriptor { get; set; }
+
         #endregion
     }
 }

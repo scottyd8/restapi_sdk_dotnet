@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Web.Configuration;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SecureNetRestApiSDK.Api.Controllers;
 using SecureNetRestApiSDK.Api.Models;
 using SecureNetRestApiSDK.Api.Requests;
@@ -36,13 +37,17 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 Amount = 11.00m,
                 Card = new Card
                 {
-                    TrackData = "%B4444333322221111^SECURENET^16041015432112345678?;4444333322221111=16041015432112345678?",
+                    TrackData = "%B4444333322221111^SECURENET^17041015432112345678?;4444333322221111=17041015432112345678?",
                 },
                 DeveloperApplication = new DeveloperApplication
                 {
                     DeveloperId = 12345678,
                     Version = "1.2"
-                }
+                },
+                ExtendedInformation = new ExtendedInformation
+                {
+                    SoftDescriptor = "Valid SoftDescriptor"
+                },
             };
 
             var apiContext = new APIContext();
@@ -56,7 +61,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             Assert.IsTrue(response.Success);
             Assert.IsNotNull(response.Transaction);
             Assert.IsTrue(response.Transaction.TransactionId > 0);
-
+            Assert.AreEqual(response.Transaction.SoftDescriptor, request.ExtendedInformation.SoftDescriptor);
             return response.Transaction.TransactionId;
         }
 
@@ -75,7 +80,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 {
                     DeveloperId = 12345678,
                     Version = "1.2"
-                },
+                }
             };
 
             var apiContext = new APIContext();
@@ -102,13 +107,17 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 Amount = 11.00m,
                 Card = new Card
                 {
-                    TrackData = "%B4444333322221111^SECURENET^16041015432112345678?;4444333322221111=16041015432112345678?"
+                    TrackData = "%B4444333322221111^SECURENET^17041015432112345678?;4444333322221111=17041015432112345678?"
                 },
                 DeveloperApplication = new DeveloperApplication
                 {
                     DeveloperId = 12345678,
                     Version = "1.2"
-                }
+                },
+                ExtendedInformation = new ExtendedInformation
+                {
+                    SoftDescriptor = "Valid SoftDescriptor"
+                },
             };
 
             var apiContext = new APIContext();
@@ -119,6 +128,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
 
             // Assert
             Assert.IsNotNull(response);
+            Assert.AreEqual(response.Transaction.SoftDescriptor, request.ExtendedInformation.SoftDescriptor);
             Assert.IsTrue(response.Success);
         }
 
@@ -146,13 +156,17 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 Amount = 11.00m,
                 Card = new Card
                 {
-                    TrackData = "%B4444333322221111^SECURENET^16041015432112345678?;4444333322221111=16041015432112345678?"
+                    TrackData = "%B4444333322221111^SECURENET^17041015432112345678?;4444333322221111=17041015432112345678?"
                 },
                 DeveloperApplication = new DeveloperApplication
                 {
                     DeveloperId = 12345678,
                     Version = "1.2"
-                }
+                },
+                ExtendedInformation = new ExtendedInformation
+                {
+                    SoftDescriptor = "Valid SoftDescriptor"
+                },
             };
 
             var apiContext = new APIContext();
@@ -166,7 +180,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             Assert.IsTrue(response.Success);
             Assert.IsNotNull(response.Transaction);
             Assert.IsTrue(response.Transaction.TransactionId > 0);
-
+            Assert.AreEqual(response.Transaction.SoftDescriptor, request.ExtendedInformation.SoftDescriptor);
             return response.Transaction.TransactionId;
         }
 
@@ -179,14 +193,14 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             // Arrange
             var request = new PriorAuthCaptureRequest
             {
-                Amount = 13.25m,
+                Amount = 10.25m,
                 TransactionId = transactionId, 
                 ExtendedInformation = new ExtendedInformation
                 {
                     ServiceData = new ServiceData
                     {
                         GratuityAmount = 1.75m,
-                    },
+                    }
                 },
                 DeveloperApplication = new DeveloperApplication
                 {
@@ -221,7 +235,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 {
                     Number = "4444 3333 2222 1111",
                     Cvv = "999",
-                    ExpirationDate = "04/2016",
+                    ExpirationDate = "04/2017",
                     Address = new Address
                     {
                         Line1 = "123 Main St.",
@@ -234,7 +248,11 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 {
                     DeveloperId = 12345678,
                     Version = "1.2"
-                }
+                },
+                ExtendedInformation = new ExtendedInformation
+                {
+                    SoftDescriptor = "Valid SoftDescriptor"
+                },
             };
 
             var apiContext = new APIContext();
@@ -245,6 +263,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
 
             // Assert
             Assert.IsNotNull(response);
+            Assert.AreEqual(response.Transaction.SoftDescriptor, request.ExtendedInformation.SoftDescriptor);
             Assert.IsTrue(response.Success);
         }
 
@@ -279,7 +298,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 {
                     Number = "4444 3333 2222 1111",
                     Cvv = "999",
-                    ExpirationDate = "04/2016",
+                    ExpirationDate = "04/2017",
                     Address = new Address
                     {
                         Line1 = "123 Main St.",
@@ -292,7 +311,8 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 },
                 ExtendedInformation = new ExtendedInformation
                 {
-                    TypeOfGoods = "PHYSICAL"
+                    TypeOfGoods = "PHYSICAL",
+                    SoftDescriptor = "Valid SoftDescriptor"
                 },
                 DeveloperApplication = new DeveloperApplication
                 {
@@ -311,6 +331,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             Assert.IsNotNull(response);
             Assert.IsTrue(response.Success);
             Assert.IsNotNull(response.Transaction);
+            Assert.AreEqual(response.Transaction.SoftDescriptor, request.ExtendedInformation.SoftDescriptor);
             Assert.IsTrue(response.Transaction.TransactionId > 0);
 
             return response.Transaction.TransactionId;
@@ -360,7 +381,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 {
                     Number = "4444 3333 2222 1111",
                     Cvv = "999",
-                    ExpirationDate = "04/2016",
+                    ExpirationDate = "04/2017",
                     Address = new Address
                     {
                         Line1 = "123 Main St.",
@@ -371,7 +392,8 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 },
                 ExtendedInformation = new ExtendedInformation
                 {
-                    TypeOfGoods = "PHYSICAL"
+                    TypeOfGoods = "PHYSICAL",
+                    SoftDescriptor = "Valid SoftDescriptor"
                 },
                 DeveloperApplication = new DeveloperApplication
                 {
@@ -388,6 +410,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
 
             // Assert
             Assert.IsNotNull(response);
+            Assert.AreEqual(response.Transaction.SoftDescriptor, request.ExtendedInformation.SoftDescriptor);
             Assert.IsTrue(response.Success);
         }
 
@@ -406,7 +429,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 {
                     Number = "4444 3333 2222 1111",
                     Cvv = "999",
-                    ExpirationDate = "04/2016",
+                    ExpirationDate = "04/2017",
                     Address = new Address
                     {
                         Line1 = "123 Main St.",
@@ -417,7 +440,8 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 },
                 ExtendedInformation = new ExtendedInformation
                 {
-                    TypeOfGoods = "PHYSICAL"
+                    TypeOfGoods = "PHYSICAL",
+                    SoftDescriptor = "Valid SoftDescriptor"
                 },
                 DeveloperApplication = new DeveloperApplication
                 {
@@ -434,11 +458,10 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
 
             // Assert
             Assert.IsNotNull(response);
+            Assert.AreEqual(response.Transaction.SoftDescriptor, request.ExtendedInformation.SoftDescriptor);
             Assert.IsTrue(response.Success);
         }
-
-
-   
+        
         /// <summary>
         /// Successful response returned from an Charge using Tokenization request.
         /// https://apidocs.securenet.com/docs/creditcardnotpresent.html?lang=csharp#tokenization
@@ -457,7 +480,8 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 AddToVault = true,
                 ExtendedInformation = new ExtendedInformation
                 {
-                    TypeOfGoods = "PHYSICAL"
+                    TypeOfGoods = "PHYSICAL",
+                    SoftDescriptor = "Valid SoftDescriptor"
                 },
                 DeveloperApplication = new DeveloperApplication
                 {
@@ -474,6 +498,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
 
             // Assert
             Assert.IsNotNull(response);
+            Assert.AreEqual(response.Transaction.SoftDescriptor, request.ExtendedInformation.SoftDescriptor);
             Assert.IsTrue(response.Success);
         }
 
@@ -513,7 +538,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             var response = controller.ProcessRequest<ChargeResponse>(apiContext, request);
 
             // Assert
-            Assert.IsNotNull(response);
+            Assert.IsNotNull(response); 
             Assert.IsTrue(response.Success);
         }
 
@@ -662,16 +687,20 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             // Arrange
             var request = new CreditRequest
             {
-                Amount = 1.05m,
+                Amount = 10,
                 Card = new Card
                 {
-                    Number = "4111 1111 1111 1111",
+                    Number = "4444 3333 2222 1111",
                     ExpirationDate = "01/2017"
                 },
                 DeveloperApplication = new DeveloperApplication
                 {
                     DeveloperId = 12345678,
                     Version = "1.2"
+                },
+                ExtendedInformation = new ExtendedInformation
+                {
+                    SoftDescriptor = "Valid SoftDescriptor"
                 }
             };
 
@@ -714,12 +743,16 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 Amount = 11.00m,
                 Card = new Card
                 {
-                    TrackData = "%B4444333322221111^SECURENET^16041015432112345678?;4444333322221111=16041015432112345678?"
+                    TrackData = "%B4444333322221111^SECURENET^17041015432112345678?"
                 },
                 DeveloperApplication = new DeveloperApplication
                 {
                     DeveloperId = 12345678,
                     Version = "1.2"
+                },
+                ExtendedInformation = new ExtendedInformation
+                {
+                    SoftDescriptor = "Valid SoftDescriptor"
                 }
             };
 
@@ -794,13 +827,17 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 Amount = 11.00m,
                 Card = new Card
                 {
-                    TrackData = "%B4444333322221111^SECURENET^16041015432112345678?;4444333322221111=16041015432112345678?"
+                    TrackData = "%B4444333322221111^SECURENET^17041015432112345678?;4444333322221111=17041015432112345678?"
                 },
                 DeveloperApplication = new DeveloperApplication
                 {
                     DeveloperId = 12345678,
                     Version = "1.2"
-                }
+                },
+                ExtendedInformation = new ExtendedInformation
+                {
+                    SoftDescriptor = "Valid SoftDescriptor"
+                },
             };
 
             var apiContext = new APIContext();
@@ -813,6 +850,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             Assert.IsNotNull(response);
             Assert.IsTrue(response.Success);
             Assert.IsNotNull(response.Transaction);
+            Assert.AreEqual(response.Transaction.SoftDescriptor, request.ExtendedInformation.SoftDescriptor);
             Assert.IsTrue(response.Transaction.TransactionId > 0);
 
             return response.Transaction.TransactionId;

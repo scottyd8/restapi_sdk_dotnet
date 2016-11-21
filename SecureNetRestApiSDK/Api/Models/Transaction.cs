@@ -153,6 +153,9 @@ namespace SecureNetRestApiSDK.Api.Models
         [JsonProperty("imageResult")]
         public object ImageResult { get; set; }
 
+        [JsonProperty("softDescriptor")]
+        public string SoftDescriptor { get; set; }
+
         #endregion
     }
 }

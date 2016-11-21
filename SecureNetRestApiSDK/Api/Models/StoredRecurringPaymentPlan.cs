@@ -58,6 +58,9 @@ namespace SecureNetRestApiSDK.Api.Models
         [JsonProperty("schedules")]
         public List<Schedule> Schedules { get; set; }
 
+        [JsonProperty("softDescriptor")]
+        public string SoftDescriptor { get; set; }
+
         #endregion
     }
 }

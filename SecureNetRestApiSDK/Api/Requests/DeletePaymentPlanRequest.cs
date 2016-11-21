@@ -1,4 +1,5 @@
 ﻿using System;
+using SecureNetRestApiSDK.Api.Models;
 using SNET.Core;
 
 namespace SecureNetRestApiSDK.Api.Requests
@@ -9,7 +10,7 @@ namespace SecureNetRestApiSDK.Api.Requests
 
         public string CustomerId { get; set; }
         public string PlanId { get; set; }
-
+        public DeveloperApplication DeveloperApplication { get; set; }
         #endregion
 
         #region Methods
