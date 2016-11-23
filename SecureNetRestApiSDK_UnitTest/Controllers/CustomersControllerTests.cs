@@ -689,7 +689,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                             UdfValue = "Udf5_Value"
                         }
                     },
-                    SoftDescriptor = "Valid SoftDescriptor"
+                    SoftDescriptor = Helper.SoftDescriptor
                 },
                 DeveloperApplication = new DeveloperApplication
                 {
@@ -737,7 +737,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                     MaxRetries = 4,
                     Notes = "This is an updated recurring plan",
                     Active = true,
-                    SoftDescriptor = "Valid SoftDescriptor"
+                    SoftDescriptor = Helper.SoftDescriptor
                 },
                 IncludeRawObjects = true,
                 IncludeRequest = true,
@@ -819,7 +819,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                     PrimaryPaymentMethodId = paymentMethodId,
                     Notes = "This is an installment plan",
                     Active = true,
-                    SoftDescriptor = "Valid SoftDescriptor",
+                    SoftDescriptor = Helper.SoftDescriptor,
                     UserDefinedFields = new List<UserDefinedField>
                     {
                         new UserDefinedField
@@ -899,7 +899,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                     MaxRetries = 4,
                     Notes = "This is an updated installment plan",
                     Active = true, 
-                    SoftDescriptor = "Valid SoftDescriptor2"
+                    SoftDescriptor = Helper.SoftDescriptor
                 },
                 DeveloperApplication = new DeveloperApplication
                 {
@@ -1009,7 +1009,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                             UdfValue = "Udf5_Value"
                         }
                     },
-                    SoftDescriptor = "Valid SoftDescriptor"
+                    SoftDescriptor = Helper.SoftDescriptor
                 },
                 DeveloperApplication = new DeveloperApplication
                 {
@@ -1047,7 +1047,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 PlanId = planId,
                 Plan = new StoredVariablePaymentPlan()
                 {
-                    SoftDescriptor = "Valid SoftDescriptor",
+                    SoftDescriptor = Helper.SoftDescriptor,
                     PlanStartDate = Convert.ToDateTime("07/12/2016"),
                     ScheduledPayments = new List<StoredScheduledVariablePaymentPlan>()
                     {

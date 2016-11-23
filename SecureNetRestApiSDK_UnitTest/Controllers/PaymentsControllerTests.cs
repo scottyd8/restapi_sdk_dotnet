@@ -46,7 +46,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 },
                 ExtendedInformation = new ExtendedInformation
                 {
-                    SoftDescriptor = "Valid SoftDescriptor"
+                    SoftDescriptor = Helper.SoftDescriptor
                 },
             };
 
@@ -116,7 +116,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 },
                 ExtendedInformation = new ExtendedInformation
                 {
-                    SoftDescriptor = "Valid SoftDescriptor"
+                    SoftDescriptor = Helper.SoftDescriptor
                 },
             };
 
@@ -165,7 +165,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 },
                 ExtendedInformation = new ExtendedInformation
                 {
-                    SoftDescriptor = "Valid SoftDescriptor"
+                    SoftDescriptor = Helper.SoftDescriptor
                 },
             };
 
@@ -251,7 +251,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 },
                 ExtendedInformation = new ExtendedInformation
                 {
-                    SoftDescriptor = "Valid SoftDescriptor"
+                    SoftDescriptor = Helper.SoftDescriptor
                 },
             };
 
@@ -312,7 +312,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 ExtendedInformation = new ExtendedInformation
                 {
                     TypeOfGoods = "PHYSICAL",
-                    SoftDescriptor = "Valid SoftDescriptor"
+                    SoftDescriptor = Helper.SoftDescriptor
                 },
                 DeveloperApplication = new DeveloperApplication
                 {
@@ -393,7 +393,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 ExtendedInformation = new ExtendedInformation
                 {
                     TypeOfGoods = "PHYSICAL",
-                    SoftDescriptor = "Valid SoftDescriptor"
+                    SoftDescriptor = Helper.SoftDescriptor
                 },
                 DeveloperApplication = new DeveloperApplication
                 {
@@ -441,7 +441,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 ExtendedInformation = new ExtendedInformation
                 {
                     TypeOfGoods = "PHYSICAL",
-                    SoftDescriptor = "Valid SoftDescriptor"
+                    SoftDescriptor = Helper.SoftDescriptor
                 },
                 DeveloperApplication = new DeveloperApplication
                 {
@@ -481,7 +481,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 ExtendedInformation = new ExtendedInformation
                 {
                     TypeOfGoods = "PHYSICAL",
-                    SoftDescriptor = "Valid SoftDescriptor"
+                    SoftDescriptor = Helper.SoftDescriptor
                 },
                 DeveloperApplication = new DeveloperApplication
                 {
@@ -700,7 +700,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 },
                 ExtendedInformation = new ExtendedInformation
                 {
-                    SoftDescriptor = "Valid SoftDescriptor"
+                    SoftDescriptor = Helper.SoftDescriptor
                 }
             };
 
@@ -752,7 +752,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 },
                 ExtendedInformation = new ExtendedInformation
                 {
-                    SoftDescriptor = "Valid SoftDescriptor"
+                    SoftDescriptor = Helper.SoftDescriptor
                 }
             };
 
@@ -836,7 +836,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 },
                 ExtendedInformation = new ExtendedInformation
                 {
-                    SoftDescriptor = "Valid SoftDescriptor"
+                    SoftDescriptor = Helper.SoftDescriptor
                 },
             };
 
