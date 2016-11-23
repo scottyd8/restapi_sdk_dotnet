@@ -11,19 +11,32 @@ namespace SecureNetRestApiSDK_UnitTest
     public static class Helper
     {
         private static bool? _isSoftDescriptorEnabled;
+        private const string SoftDescriptorValue = "Valid Soft Descriptor";
 
-        public static string SoftDescriptor
+        public static string RequestSoftDescriptor
         {
             get
             {
-                if (!_isSoftDescriptorEnabled.HasValue)
-                {
-                    _isSoftDescriptorEnabled = bool.Parse(ConfigurationManager.AppSettings["isSoftDescriptorEnabled"]);
-                }
-
-                return Convert.ToBoolean(_isSoftDescriptorEnabled) ? "Valid Soft Descriptor" : string.Empty;
+                InitSoftDescriptorConfiguration();
+                return Convert.ToBoolean(_isSoftDescriptorEnabled) ? SoftDescriptorValue : null;
             }
         }
 
+        public static string ResponseSoftDescriptor
+        {
+            get
+            {
+                InitSoftDescriptorConfiguration();
+                return Convert.ToBoolean(_isSoftDescriptorEnabled) ? SoftDescriptorValue : string.Empty;
+            }
+        }
+
+        private static void InitSoftDescriptorConfiguration()
+        {
+            if (!_isSoftDescriptorEnabled.HasValue)
+            {
+                _isSoftDescriptorEnabled = bool.Parse(ConfigurationManager.AppSettings["isSoftDescriptorEnabled"]);
+            }
+        }
     }
 }

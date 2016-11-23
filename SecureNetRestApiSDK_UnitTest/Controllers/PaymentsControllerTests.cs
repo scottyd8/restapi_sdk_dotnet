@@ -46,7 +46,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 },
                 ExtendedInformation = new ExtendedInformation
                 {
-                    SoftDescriptor = Helper.SoftDescriptor
+                    SoftDescriptor = Helper.RequestSoftDescriptor
                 },
             };
 
@@ -61,7 +61,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             Assert.IsTrue(response.Success);
             Assert.IsNotNull(response.Transaction);
             Assert.IsTrue(response.Transaction.TransactionId > 0);
-            Assert.AreEqual(response.Transaction.SoftDescriptor, request.ExtendedInformation.SoftDescriptor);
+            Assert.AreEqual(response.Transaction.SoftDescriptor, Helper.ResponseSoftDescriptor);
             return response.Transaction.TransactionId;
         }
 
@@ -116,7 +116,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 },
                 ExtendedInformation = new ExtendedInformation
                 {
-                    SoftDescriptor = Helper.SoftDescriptor
+                    SoftDescriptor = Helper.RequestSoftDescriptor
                 },
             };
 
@@ -128,7 +128,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
 
             // Assert
             Assert.IsNotNull(response);
-            Assert.AreEqual(response.Transaction.SoftDescriptor, request.ExtendedInformation.SoftDescriptor);
+            Assert.AreEqual(response.Transaction.SoftDescriptor, Helper.ResponseSoftDescriptor);
             Assert.IsTrue(response.Success);
         }
 
@@ -165,7 +165,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 },
                 ExtendedInformation = new ExtendedInformation
                 {
-                    SoftDescriptor = Helper.SoftDescriptor
+                    SoftDescriptor = Helper.RequestSoftDescriptor
                 },
             };
 
@@ -180,7 +180,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             Assert.IsTrue(response.Success);
             Assert.IsNotNull(response.Transaction);
             Assert.IsTrue(response.Transaction.TransactionId > 0);
-            Assert.AreEqual(response.Transaction.SoftDescriptor, request.ExtendedInformation.SoftDescriptor);
+            Assert.AreEqual(response.Transaction.SoftDescriptor, Helper.ResponseSoftDescriptor);
             return response.Transaction.TransactionId;
         }
 
@@ -251,7 +251,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 },
                 ExtendedInformation = new ExtendedInformation
                 {
-                    SoftDescriptor = Helper.SoftDescriptor
+                    SoftDescriptor = Helper.RequestSoftDescriptor
                 },
             };
 
@@ -263,7 +263,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
 
             // Assert
             Assert.IsNotNull(response);
-            Assert.AreEqual(response.Transaction.SoftDescriptor, request.ExtendedInformation.SoftDescriptor);
+            Assert.AreEqual(response.Transaction.SoftDescriptor, Helper.ResponseSoftDescriptor);
             Assert.IsTrue(response.Success);
         }
 
@@ -312,7 +312,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 ExtendedInformation = new ExtendedInformation
                 {
                     TypeOfGoods = "PHYSICAL",
-                    SoftDescriptor = Helper.SoftDescriptor
+                    SoftDescriptor = Helper.RequestSoftDescriptor
                 },
                 DeveloperApplication = new DeveloperApplication
                 {
@@ -331,7 +331,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             Assert.IsNotNull(response);
             Assert.IsTrue(response.Success);
             Assert.IsNotNull(response.Transaction);
-            Assert.AreEqual(response.Transaction.SoftDescriptor, request.ExtendedInformation.SoftDescriptor);
+            Assert.AreEqual(response.Transaction.SoftDescriptor, Helper.ResponseSoftDescriptor);
             Assert.IsTrue(response.Transaction.TransactionId > 0);
 
             return response.Transaction.TransactionId;
@@ -393,7 +393,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 ExtendedInformation = new ExtendedInformation
                 {
                     TypeOfGoods = "PHYSICAL",
-                    SoftDescriptor = Helper.SoftDescriptor
+                    SoftDescriptor = Helper.RequestSoftDescriptor
                 },
                 DeveloperApplication = new DeveloperApplication
                 {
@@ -410,7 +410,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
 
             // Assert
             Assert.IsNotNull(response);
-            Assert.AreEqual(response.Transaction.SoftDescriptor, request.ExtendedInformation.SoftDescriptor);
+            Assert.AreEqual(response.Transaction.SoftDescriptor, Helper.ResponseSoftDescriptor);
             Assert.IsTrue(response.Success);
         }
 
@@ -441,7 +441,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 ExtendedInformation = new ExtendedInformation
                 {
                     TypeOfGoods = "PHYSICAL",
-                    SoftDescriptor = Helper.SoftDescriptor
+                    SoftDescriptor = Helper.RequestSoftDescriptor
                 },
                 DeveloperApplication = new DeveloperApplication
                 {
@@ -458,7 +458,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
 
             // Assert
             Assert.IsNotNull(response);
-            Assert.AreEqual(response.Transaction.SoftDescriptor, request.ExtendedInformation.SoftDescriptor);
+            Assert.AreEqual(response.Transaction.SoftDescriptor, Helper.ResponseSoftDescriptor);
             Assert.IsTrue(response.Success);
         }
         
@@ -481,7 +481,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 ExtendedInformation = new ExtendedInformation
                 {
                     TypeOfGoods = "PHYSICAL",
-                    SoftDescriptor = Helper.SoftDescriptor
+                    SoftDescriptor = Helper.RequestSoftDescriptor
                 },
                 DeveloperApplication = new DeveloperApplication
                 {
@@ -498,7 +498,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
 
             // Assert
             Assert.IsNotNull(response);
-            Assert.AreEqual(response.Transaction.SoftDescriptor, request.ExtendedInformation.SoftDescriptor);
+            Assert.AreEqual(response.Transaction.SoftDescriptor, Helper.ResponseSoftDescriptor);
             Assert.IsTrue(response.Success);
         }
 
@@ -700,7 +700,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 },
                 ExtendedInformation = new ExtendedInformation
                 {
-                    SoftDescriptor = Helper.SoftDescriptor
+                    SoftDescriptor = Helper.RequestSoftDescriptor
                 }
             };
 
@@ -712,6 +712,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
 
             // Assert
             Assert.IsNotNull(response);
+            Assert.AreEqual(response.Transaction.SoftDescriptor, Helper.ResponseSoftDescriptor);
             Assert.IsTrue(response.Success);
         }
 
@@ -752,7 +753,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 },
                 ExtendedInformation = new ExtendedInformation
                 {
-                    SoftDescriptor = Helper.SoftDescriptor
+                    SoftDescriptor = Helper.RequestSoftDescriptor
                 }
             };
 
@@ -766,6 +767,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             Assert.IsNotNull(response);
             Assert.IsTrue(response.Success);
             Assert.IsNotNull(response.Transaction);
+            Assert.AreEqual(response.Transaction.SoftDescriptor, Helper.ResponseSoftDescriptor);
             Assert.IsTrue(response.Transaction.TransactionId > 0);
 
             return response.Transaction.TransactionId;
@@ -836,7 +838,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 },
                 ExtendedInformation = new ExtendedInformation
                 {
-                    SoftDescriptor = Helper.SoftDescriptor
+                    SoftDescriptor = Helper.RequestSoftDescriptor
                 },
             };
 
@@ -850,7 +852,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             Assert.IsNotNull(response);
             Assert.IsTrue(response.Success);
             Assert.IsNotNull(response.Transaction);
-            Assert.AreEqual(response.Transaction.SoftDescriptor, request.ExtendedInformation.SoftDescriptor);
+            Assert.AreEqual(response.Transaction.SoftDescriptor, Helper.ResponseSoftDescriptor);
             Assert.IsTrue(response.Transaction.TransactionId > 0);
 
             return response.Transaction.TransactionId;
