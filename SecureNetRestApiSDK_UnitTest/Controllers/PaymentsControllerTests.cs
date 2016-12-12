@@ -46,7 +46,8 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 },
                 ExtendedInformation = new ExtendedInformation
                 {
-                    SoftDescriptor = Helper.RequestSoftDescriptor
+                    SoftDescriptor = Helper.RequestSoftDescriptor,
+                    DynamicMCC = Helper.RequestDynamicMCC
                 },
             };
 
@@ -62,6 +63,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             Assert.IsNotNull(response.Transaction);
             Assert.IsTrue(response.Transaction.TransactionId > 0);
             Assert.AreEqual(response.Transaction.SoftDescriptor, Helper.ResponseSoftDescriptor);
+            Assert.AreEqual(response.Transaction.DynamicMCC, Helper.ResponseDynamicMCC);
             return response.Transaction.TransactionId;
         }
 
@@ -116,7 +118,8 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 },
                 ExtendedInformation = new ExtendedInformation
                 {
-                    SoftDescriptor = Helper.RequestSoftDescriptor
+                    SoftDescriptor = Helper.RequestSoftDescriptor,
+                    DynamicMCC = Helper.RequestDynamicMCC
                 },
             };
 
@@ -129,6 +132,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             // Assert
             Assert.IsNotNull(response);
             Assert.AreEqual(response.Transaction.SoftDescriptor, Helper.ResponseSoftDescriptor);
+            Assert.AreEqual(response.Transaction.DynamicMCC, Helper.ResponseDynamicMCC);
             Assert.IsTrue(response.Success);
         }
 
@@ -165,7 +169,8 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 },
                 ExtendedInformation = new ExtendedInformation
                 {
-                    SoftDescriptor = Helper.RequestSoftDescriptor
+                    SoftDescriptor = Helper.RequestSoftDescriptor,
+                    DynamicMCC = Helper.RequestDynamicMCC
                 },
             };
 
@@ -181,6 +186,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             Assert.IsNotNull(response.Transaction);
             Assert.IsTrue(response.Transaction.TransactionId > 0);
             Assert.AreEqual(response.Transaction.SoftDescriptor, Helper.ResponseSoftDescriptor);
+            Assert.AreEqual(response.Transaction.DynamicMCC, Helper.ResponseDynamicMCC);
             return response.Transaction.TransactionId;
         }
 
@@ -251,7 +257,8 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 },
                 ExtendedInformation = new ExtendedInformation
                 {
-                    SoftDescriptor = Helper.RequestSoftDescriptor
+                    SoftDescriptor = Helper.RequestSoftDescriptor, 
+                    DynamicMCC = Helper.RequestDynamicMCC
                 },
             };
 
@@ -264,6 +271,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             // Assert
             Assert.IsNotNull(response);
             Assert.AreEqual(response.Transaction.SoftDescriptor, Helper.ResponseSoftDescriptor);
+            Assert.AreEqual(response.Transaction.DynamicMCC, Helper.ResponseDynamicMCC);
             Assert.IsTrue(response.Success);
         }
 
@@ -312,7 +320,8 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 ExtendedInformation = new ExtendedInformation
                 {
                     TypeOfGoods = "PHYSICAL",
-                    SoftDescriptor = Helper.RequestSoftDescriptor
+                    SoftDescriptor = Helper.RequestSoftDescriptor,
+                    DynamicMCC = Helper.RequestDynamicMCC
                 },
                 DeveloperApplication = new DeveloperApplication
                 {
@@ -332,6 +341,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             Assert.IsTrue(response.Success);
             Assert.IsNotNull(response.Transaction);
             Assert.AreEqual(response.Transaction.SoftDescriptor, Helper.ResponseSoftDescriptor);
+            Assert.AreEqual(response.Transaction.DynamicMCC, Helper.ResponseDynamicMCC);
             Assert.IsTrue(response.Transaction.TransactionId > 0);
 
             return response.Transaction.TransactionId;
@@ -393,7 +403,8 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 ExtendedInformation = new ExtendedInformation
                 {
                     TypeOfGoods = "PHYSICAL",
-                    SoftDescriptor = Helper.RequestSoftDescriptor
+                    SoftDescriptor = Helper.RequestSoftDescriptor,
+                    DynamicMCC = Helper.RequestDynamicMCC
                 },
                 DeveloperApplication = new DeveloperApplication
                 {
@@ -411,6 +422,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             // Assert
             Assert.IsNotNull(response);
             Assert.AreEqual(response.Transaction.SoftDescriptor, Helper.ResponseSoftDescriptor);
+            Assert.AreEqual(response.Transaction.DynamicMCC, Helper.ResponseDynamicMCC);
             Assert.IsTrue(response.Success);
         }
 
@@ -441,7 +453,8 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 ExtendedInformation = new ExtendedInformation
                 {
                     TypeOfGoods = "PHYSICAL",
-                    SoftDescriptor = Helper.RequestSoftDescriptor
+                    SoftDescriptor = Helper.RequestSoftDescriptor,
+                    DynamicMCC = Helper.RequestDynamicMCC
                 },
                 DeveloperApplication = new DeveloperApplication
                 {
@@ -459,6 +472,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             // Assert
             Assert.IsNotNull(response);
             Assert.AreEqual(response.Transaction.SoftDescriptor, Helper.ResponseSoftDescriptor);
+            Assert.AreEqual(response.Transaction.DynamicMCC, Helper.ResponseDynamicMCC);
             Assert.IsTrue(response.Success);
         }
         
@@ -481,7 +495,8 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 ExtendedInformation = new ExtendedInformation
                 {
                     TypeOfGoods = "PHYSICAL",
-                    SoftDescriptor = Helper.RequestSoftDescriptor
+                    SoftDescriptor = Helper.RequestSoftDescriptor,
+                    DynamicMCC = Helper.RequestDynamicMCC
                 },
                 DeveloperApplication = new DeveloperApplication
                 {
@@ -499,6 +514,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             // Assert
             Assert.IsNotNull(response);
             Assert.AreEqual(response.Transaction.SoftDescriptor, Helper.ResponseSoftDescriptor);
+            Assert.AreEqual(response.Transaction.DynamicMCC, Helper.ResponseDynamicMCC);
             Assert.IsTrue(response.Success);
         }
 
@@ -700,7 +716,8 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 },
                 ExtendedInformation = new ExtendedInformation
                 {
-                    SoftDescriptor = Helper.RequestSoftDescriptor
+                    SoftDescriptor = Helper.RequestSoftDescriptor,
+                    DynamicMCC = Helper.RequestDynamicMCC
                 }
             };
 
@@ -713,6 +730,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             // Assert
             Assert.IsNotNull(response);
             Assert.AreEqual(response.Transaction.SoftDescriptor, Helper.ResponseSoftDescriptor);
+            Assert.AreEqual(response.Transaction.DynamicMCC, Helper.ResponseDynamicMCC);
             Assert.IsTrue(response.Success);
         }
 
@@ -753,7 +771,8 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 },
                 ExtendedInformation = new ExtendedInformation
                 {
-                    SoftDescriptor = Helper.RequestSoftDescriptor
+                    SoftDescriptor = Helper.RequestSoftDescriptor,
+                    DynamicMCC = Helper.RequestDynamicMCC
                 }
             };
 
@@ -768,6 +787,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             Assert.IsTrue(response.Success);
             Assert.IsNotNull(response.Transaction);
             Assert.AreEqual(response.Transaction.SoftDescriptor, Helper.ResponseSoftDescriptor);
+            Assert.AreEqual(response.Transaction.DynamicMCC, Helper.ResponseDynamicMCC);
             Assert.IsTrue(response.Transaction.TransactionId > 0);
 
             return response.Transaction.TransactionId;
@@ -838,7 +858,8 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 },
                 ExtendedInformation = new ExtendedInformation
                 {
-                    SoftDescriptor = Helper.RequestSoftDescriptor
+                    SoftDescriptor = Helper.RequestSoftDescriptor,
+                    DynamicMCC = Helper.RequestDynamicMCC
                 },
             };
 
@@ -853,6 +874,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             Assert.IsTrue(response.Success);
             Assert.IsNotNull(response.Transaction);
             Assert.AreEqual(response.Transaction.SoftDescriptor, Helper.ResponseSoftDescriptor);
+            Assert.AreEqual(response.Transaction.DynamicMCC, Helper.ResponseDynamicMCC);
             Assert.IsTrue(response.Transaction.TransactionId > 0);
 
             return response.Transaction.TransactionId;

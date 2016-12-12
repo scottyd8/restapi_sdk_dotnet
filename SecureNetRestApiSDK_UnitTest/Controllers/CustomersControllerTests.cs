@@ -689,7 +689,8 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                             UdfValue = "Udf5_Value"
                         }
                     },
-                    SoftDescriptor = Helper.RequestSoftDescriptor
+                    SoftDescriptor = Helper.RequestSoftDescriptor,
+                    DynamicMCC = Helper.RequestDynamicMCC
                 },
                 DeveloperApplication = new DeveloperApplication
                 {
@@ -707,6 +708,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             // Assert
             Assert.IsNotNull(response);
             Assert.AreEqual(response.StoredRecurringPaymentPlan.SoftDescriptor, Helper.ResponseSoftDescriptor);
+            Assert.AreEqual(response.StoredRecurringPaymentPlan.DynamicMCC, Helper.ResponseDynamicMCC);
             Assert.IsTrue(response.Success);
             Assert.IsNotNull(response.PlanId);
 
@@ -737,7 +739,8 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                     MaxRetries = 4,
                     Notes = "This is an updated recurring plan",
                     Active = true,
-                    SoftDescriptor = Helper.RequestSoftDescriptor
+                    SoftDescriptor = Helper.RequestSoftDescriptor, 
+                    DynamicMCC = Helper.RequestDynamicMCC
                 },
                 IncludeRawObjects = true,
                 IncludeRequest = true,
@@ -757,6 +760,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             // Assert
             Assert.IsNotNull(response);
             Assert.AreEqual(response.StoredRecurringPaymentPlan.SoftDescriptor, Helper.ResponseSoftDescriptor);
+            Assert.AreEqual(response.StoredRecurringPaymentPlan.DynamicMCC, Helper.ResponseDynamicMCC);
             Assert.IsTrue(response.Success);
         }
 
@@ -820,6 +824,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                     Notes = "This is an installment plan",
                     Active = true,
                     SoftDescriptor = Helper.RequestSoftDescriptor,
+                    DynamicMCC = Helper.RequestDynamicMCC,
                     UserDefinedFields = new List<UserDefinedField>
                     {
                         new UserDefinedField
@@ -866,6 +871,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             // Assert
             Assert.IsNotNull(response);
             Assert.AreEqual(response.StoredInstallmentPaymentPlan.SoftDescriptor, Helper.ResponseSoftDescriptor);
+            Assert.AreEqual(response.StoredInstallmentPaymentPlan.DynamicMCC, Helper.ResponseDynamicMCC);
             Assert.IsTrue(response.Success);
             Assert.IsNotNull(response.PlanId);
 
@@ -899,7 +905,8 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                     MaxRetries = 4,
                     Notes = "This is an updated installment plan",
                     Active = true, 
-                    SoftDescriptor = Helper.RequestSoftDescriptor
+                    SoftDescriptor = Helper.RequestSoftDescriptor,
+                    DynamicMCC = Helper.RequestDynamicMCC
                 },
                 DeveloperApplication = new DeveloperApplication
                 {
@@ -917,6 +924,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             // Assert
             Assert.IsNotNull(response);
             Assert.AreEqual(response.StoredInstallmentPaymentPlan.SoftDescriptor, Helper.ResponseSoftDescriptor);
+            Assert.AreEqual(response.StoredInstallmentPaymentPlan.DynamicMCC, Helper.ResponseDynamicMCC);
             Assert.IsTrue(response.Success);
         }
 
@@ -1009,7 +1017,8 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                             UdfValue = "Udf5_Value"
                         }
                     },
-                    SoftDescriptor = Helper.RequestSoftDescriptor
+                    SoftDescriptor = Helper.RequestSoftDescriptor, 
+                    DynamicMCC = Helper.RequestDynamicMCC
                 },
                 DeveloperApplication = new DeveloperApplication
                 {
@@ -1027,6 +1036,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             // Assert
             Assert.IsNotNull(response);
             Assert.AreEqual(response.StoredVariablePaymentPlan.SoftDescriptor, Helper.ResponseSoftDescriptor);
+            Assert.AreEqual(response.StoredVariablePaymentPlan.DynamicMCC, Helper.ResponseDynamicMCC);
             Assert.IsTrue(response.Success);
             Assert.IsNotNull(response.PlanId);
 
@@ -1048,6 +1058,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 Plan = new StoredVariablePaymentPlan()
                 {
                     SoftDescriptor = Helper.RequestSoftDescriptor,
+                    DynamicMCC = Helper.RequestDynamicMCC,
                     PlanStartDate = Convert.ToDateTime("07/12/2016"),
                     ScheduledPayments = new List<StoredScheduledVariablePaymentPlan>()
                     {
@@ -1078,6 +1089,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             // Assert
             Assert.IsNotNull(response);
             Assert.AreEqual(response.StoredVariablePaymentPlan.SoftDescriptor, Helper.ResponseSoftDescriptor);
+            Assert.AreEqual(response.StoredVariablePaymentPlan.DynamicMCC, Helper.ResponseDynamicMCC);
             Assert.IsTrue(response.Success);
             
         }

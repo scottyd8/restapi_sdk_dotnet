@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SecureNetRestApiSDK_UnitTest
 {
@@ -12,6 +8,9 @@ namespace SecureNetRestApiSDK_UnitTest
     {
         private static bool? _isSoftDescriptorEnabled;
         private const string SoftDescriptorValue = "Valid Soft Descriptor";
+
+        private static bool? _isDynamicMCCEnabled;
+        private const string DynamicMCC = "1234";
 
         public static string RequestSoftDescriptor
         {
@@ -36,6 +35,32 @@ namespace SecureNetRestApiSDK_UnitTest
             if (!_isSoftDescriptorEnabled.HasValue)
             {
                 _isSoftDescriptorEnabled = bool.Parse(ConfigurationManager.AppSettings["isSoftDescriptorEnabled"]);
+            }
+        }
+
+        public static string RequestDynamicMCC
+        {
+            get
+            {
+                InitDynamicMCCConfiguration();
+                return Convert.ToBoolean(_isDynamicMCCEnabled) ? DynamicMCC : null;
+            }
+        }
+
+        public static string ResponseDynamicMCC
+        {
+            get
+            {
+                InitDynamicMCCConfiguration();
+                return Convert.ToBoolean(_isDynamicMCCEnabled) ? DynamicMCC : string.Empty;
+            }
+        }
+
+        private static void InitDynamicMCCConfiguration()
+        {
+            if (!_isDynamicMCCEnabled.HasValue)
+            {
+                _isDynamicMCCEnabled = bool.Parse(ConfigurationManager.AppSettings["isDynamicMCCEnabled"]);
             }
         }
     }

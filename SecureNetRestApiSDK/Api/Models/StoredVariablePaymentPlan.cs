@@ -21,6 +21,9 @@ namespace SecureNetRestApiSDK.Api.Models
 
         [JsonProperty("softDescriptor")]
         public string SoftDescriptor { get; set; }
+    
+        [JsonProperty("dynamicMCC")]
+        public string DynamicMCC { get; set; }
 
         #endregion
     }

@@ -89,6 +89,12 @@ namespace SecureNetRestApiSDK.Api.Models
         [JsonProperty("softDescriptor")]
         public String SoftDescriptor { get; set; }
 
+        /// <summary>
+        /// Displays a merchant category code 
+        /// </summary>
+        [JsonProperty("dynamicMCC")]
+        public String DynamicMCC { get; set; }
+
         #endregion
     }
 }
