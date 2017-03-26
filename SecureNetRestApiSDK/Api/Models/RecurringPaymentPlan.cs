@@ -56,6 +56,12 @@ namespace SecureNetRestApiSDK.Api.Models
         [JsonProperty("userDefinedFields")]
         public List<UserDefinedField> UserDefinedFields { get; set; }
 
+        [JsonProperty("softDescriptor")]
+        public string SoftDescriptor { get; set; }
+
+        [JsonProperty("dynamicMCC")]
+        public string DynamicMCC { get; set; }
+
         #endregion
     }
 }

@@ -16,6 +16,11 @@ namespace SecureNetRestApiSDK.Api.Models
         [JsonProperty("amount")]
         public decimal Amount { get; set; }
 
+        [JsonProperty("softDescriptor")]
+        public string SoftDescriptor { get; set; }
+        [JsonProperty("dynamicMCC")]
+        public string DynamicMCC { get; set; }
+
         #endregion
     }
 }

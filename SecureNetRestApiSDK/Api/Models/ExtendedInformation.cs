@@ -83,6 +83,18 @@ namespace SecureNetRestApiSDK.Api.Models
         [JsonProperty("invoiceDescription")]
         public String InvoiceDescription { get; set; }
 
+        /// <summary>
+        /// Displays a description in addition to the merchants DBA
+        /// </summary>
+        [JsonProperty("softDescriptor")]
+        public String SoftDescriptor { get; set; }
+
+        /// <summary>
+        /// Displays a merchant category code 
+        /// </summary>
+        [JsonProperty("dynamicMCC")]
+        public String DynamicMCC { get; set; }
+
         #endregion
     }
 }
