@@ -1,12 +1,19 @@
 ﻿using SNET.Core;
+﻿using System;
+using SecureNetRestApiSDK.Api.Models;
 
 namespace SecureNetRestApiSDK.Api.Requests
 {
-    public class TransactionRetrieveRequest : SecureNetRequest
+    public class TransactionSearchRequest : SecureNetRequest
     {
         #region Properties
 
         public int TransactionId { get; set; }
+        public string CustomerId { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public decimal Amount { get; set; }
+        public DeveloperApplication DeveloperApplication { get; set; }
 
         #endregion
 

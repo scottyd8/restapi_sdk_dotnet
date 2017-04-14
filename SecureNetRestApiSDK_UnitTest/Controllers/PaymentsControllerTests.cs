@@ -1,4 +1,6 @@
 ﻿using System.Web.Configuration;
+﻿using System.Runtime.InteropServices.ComTypes;
+using System.Runtime.Remoting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SecureNetRestApiSDK.Api.Controllers;
 using SecureNetRestApiSDK.Api.Models;
@@ -32,25 +34,8 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
         public int Credit_Card_Present_AuthorizationOnly_Request_Returns_Successfully()
         {
             // Arrange
-            var request = new AuthorizeRequest
-            {
-                Amount = 11.00m,
-                Card = new Card
-                {
-                    TrackData = "%B4444333322221111^SECURENET^17041015432112345678?;4444333322221111=17041015432112345678?",
-                },
-                DeveloperApplication = new DeveloperApplication
-                {
-                    DeveloperId = 12345678,
-                    Version = "1.2"
-                },
-                ExtendedInformation = new ExtendedInformation
-                {
-                    SoftDescriptor = Helper.RequestSoftDescriptor,
-                    DynamicMCC = Helper.RequestDynamicMCC
-                },
-            };
-
+            var request = Helper.GetAnAuthorizeRequest();
+       
             var apiContext = new APIContext();
             var controller = new PaymentsController();
 
@@ -67,6 +52,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             return response.Transaction.TransactionId;
         }
 
+
         /// <summary>
         /// Successful response returned from a Credit Card Present PriorAuthCapture request.
         /// https://apidocs.securenet.com/docs/creditcardpresent.html?lang=JSON#priorauth
@@ -74,16 +60,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
         public void Credit_Card_Present_PriorAuthCapture_Request_Returns_Successfully(int transactionId)
         {
             // Arrange
-            var request = new PriorAuthCaptureRequest
-            {
-                Amount = 11.00m,
-                TransactionId = transactionId, 
-                DeveloperApplication = new DeveloperApplication
-                {
-                    DeveloperId = 12345678,
-                    Version = "1.2"
-                }
-            };
+            var request = Helper.GetAPriorAuthCaptureRequest(transactionId);
 
             var apiContext = new APIContext();
             var controller = new PaymentsController();
@@ -97,6 +74,122 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
         }
 
         /// <summary>
+        /// Unit Tests for an AuthorizationOnly request and a subsequent PriorAuthCapture request ,both with PosCardholderActivatedTerminal. Tests combined in one method to pass the
+        /// required transaction identifier and guaranteee the order of operation.
+        /// </summary>
+        [TestMethod]
+        public void Credit_Card_Present_AuthorizationOnly_And_PriorAuthCapture_Requests_With_CATIndicator_Returns_Successfully()
+        {
+            int transactionId = Credit_Card_Present_AuthorizationOnly_Request_With_CATIndicator_Returns_Successfully();
+
+            Credit_Card_Present_PriorAuthCapture_Request_With_CATIndicator_Returns_Successfully(transactionId);
+        }
+
+
+        /// <summary>
+        /// Successful response returned from a Credit Card Present Authorization Only request with PosCardholderActivatedTerminal .
+        /// https://apidocs.securenet.com/docs/creditcardpresent.html?lang=JSON#authonly
+        /// </summary>
+        public int Credit_Card_Present_AuthorizationOnly_Request_With_CATIndicator_Returns_Successfully( )
+        {
+            // Arrange
+            var request = Helper.GetAnAuthorizeRequest();
+            request.ExtendedInformation.AdditionalTerminalInfo = new AdditionalTerminalInfo
+            {
+                CATIndicator = Helper.GetCATIndicatorValue()
+            };
+
+            var apiContext = new APIContext();
+            var controller = new PaymentsController();
+
+            // Act
+            var response = controller.ProcessRequest<AuthorizeResponse>(apiContext, request);
+
+            // Assert
+            Assert.IsNotNull(response);
+            Assert.IsTrue(response.Success);
+            Assert.IsNotNull(response.Transaction);
+            Assert.IsTrue(response.Transaction.TransactionId > 0);
+            Assert.AreEqual(response.Transaction.CATIndicator, Helper.GetCATIndicatorValue());
+            return response.Transaction.TransactionId;
+        }
+
+        /// <summary>
+        /// Successful response returned from a Credit Card Present PriorAuthCapture request with PosCardholderActivatedTerminal.
+        /// https://apidocs.securenet.com/docs/creditcardpresent.html?lang=JSON#priorauth
+        /// </summary>
+        public void Credit_Card_Present_PriorAuthCapture_Request_With_CATIndicator_Returns_Successfully(int transactionId)
+        {
+            // Arrange
+            var request = Helper.GetAPriorAuthCaptureRequest(transactionId);
+
+            var apiContext = new APIContext();
+            var controller = new PaymentsController();
+
+            // Act
+            var response = controller.ProcessRequest<PriorAuthCaptureResponse>(apiContext, request);
+
+            // Assert
+            Assert.IsNotNull(response);
+            Assert.AreEqual(response.Transaction.CATIndicator, Helper.GetCATIndicatorValue());
+            Assert.IsTrue(response.Success);
+        }
+
+        /// <summary>
+        /// Successful response returned from a Credit Card Present Verify request.
+        /// https://apidocs.securenet.com/docs/creditcardpresent.html?lang=JSON#verify
+        /// </summary>
+        [TestMethod]
+        public void Credit_Card_Present_Verify_Request_Returns_Successfully()
+        {
+            // Arrange
+            var request = Helper.GetAVerifyRequest();
+
+            var apiContext = new APIContext();
+            var controller = new PaymentsController();
+
+            // Act
+            var response = controller.ProcessRequest<VerifyResponse>(apiContext, request);
+
+            // Assert
+            Assert.IsNotNull(response);
+            Assert.IsTrue(response.Success);
+            Assert.IsNotNull(response.Transaction);
+            Assert.IsTrue(response.Transaction.TransactionId > 0);
+            Assert.AreEqual(response.Transaction.SoftDescriptor, Helper.ResponseSoftDescriptor);
+            Assert.AreEqual(response.Transaction.DynamicMCC, Helper.ResponseDynamicMCC);
+        }
+
+        /// <summary>
+        /// Successful response returned from a Credit Card Present Verify request with PosCardholderActivatedTerminal.
+        /// https://apidocs.securenet.com/docs/creditcardpresent.html?lang=JSON#verify
+        /// </summary>
+        [TestMethod]
+        public void Credit_Card_Present_Verify_Request_With_CATIndicator_Returns_Successfully()
+        {
+            // Arrange
+            var request = Helper.GetAVerifyRequest();
+            var catIndicatorValue = ((int) PosCardholderActivatedTerminal.TransponderTransaction).ToString();
+            request.ExtendedInformation.AdditionalTerminalInfo = new AdditionalTerminalInfo
+            {
+                CATIndicator = catIndicatorValue
+            };
+
+            var apiContext = new APIContext();
+            var controller = new PaymentsController();
+
+            // Act
+            var response = controller.ProcessRequest<VerifyResponse>(apiContext, request);
+
+            // Assert
+            Assert.IsNotNull(response);
+            Assert.IsTrue(response.Success);
+            Assert.IsNotNull(response.Transaction);
+            Assert.IsTrue(response.Transaction.TransactionId > 0);
+            Assert.AreEqual(response.Transaction.CATIndicator, catIndicatorValue);
+        }
+
+        /// <summary>
         /// Successful response returned from a Credit Card Present Charge request.
         /// https://apidocs.securenet.com/docs/creditcardpresent.html?lang=JSON#charge
         /// </summary>
@@ -104,24 +197,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
         public void Credit_Card_Present_Charge_Request_Returns_Successfully()
         {
             // Arrange
-            var request = new ChargeRequest
-            {
-                Amount = 11.00m,
-                Card = new Card
-                {
-                    TrackData = "%B4444333322221111^SECURENET^17041015432112345678?;4444333322221111=17041015432112345678?"
-                },
-                DeveloperApplication = new DeveloperApplication
-                {
-                    DeveloperId = 12345678,
-                    Version = "1.2"
-                },
-                ExtendedInformation = new ExtendedInformation
-                {
-                    SoftDescriptor = Helper.RequestSoftDescriptor,
-                    DynamicMCC = Helper.RequestDynamicMCC
-                },
-            };
+            var request = Helper.GetAChargeRequest();
 
             var apiContext = new APIContext();
             var controller = new PaymentsController();
@@ -133,6 +209,33 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             Assert.IsNotNull(response);
             Assert.AreEqual(response.Transaction.SoftDescriptor, Helper.ResponseSoftDescriptor);
             Assert.AreEqual(response.Transaction.DynamicMCC, Helper.ResponseDynamicMCC);
+            Assert.IsTrue(response.Success);
+        }
+
+        /// <summary>
+        /// Successful response returned from a Credit Card Present Charge request with PosCardholderActivatedTerminal.
+        /// https://apidocs.securenet.com/docs/creditcardpresent.html?lang=JSON#charge
+        /// </summary>
+        [TestMethod]
+        public void Credit_Card_Present_Charge_Request_With_CATIndicator_Returns_Successfully()
+        {
+            // Arrange
+            var request = Helper.GetAChargeRequest();
+            
+            request.ExtendedInformation.AdditionalTerminalInfo = new AdditionalTerminalInfo
+            {
+                CATIndicator = ((int) PosCardholderActivatedTerminal.TransponderTransaction).ToString()
+            };
+
+            var apiContext = new APIContext();
+            var controller = new PaymentsController();
+
+            // Act
+            var response = controller.ProcessRequest<ChargeResponse>(apiContext, request);
+
+            // Assert
+            Assert.IsNotNull(response);
+            Assert.AreEqual(response.Transaction.CATIndicator, Helper.GetCATIndicatorValue());
             Assert.IsTrue(response.Success);
         }
 
@@ -155,24 +258,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
         public int Credit_Card_Present_IncludeTip_AuthorizationOnly_Request_Returns_Successfully()
         {
             // Arrange
-            var request = new AuthorizeRequest
-            {
-                Amount = 11.00m,
-                Card = new Card
-                {
-                    TrackData = "%B4444333322221111^SECURENET^17041015432112345678?;4444333322221111=17041015432112345678?"
-                },
-                DeveloperApplication = new DeveloperApplication
-                {
-                    DeveloperId = 12345678,
-                    Version = "1.2"
-                },
-                ExtendedInformation = new ExtendedInformation
-                {
-                    SoftDescriptor = Helper.RequestSoftDescriptor,
-                    DynamicMCC = Helper.RequestDynamicMCC
-                },
-            };
+            var request = Helper.GetAnAuthorizeRequest();
 
             var apiContext = new APIContext();
             var controller = new PaymentsController();
@@ -197,22 +283,10 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
         public void Credit_Card_Present_IncludeTip_PriorAuthCapture_Request_Returns_Successfully(int transactionId)
         {
             // Arrange
-            var request = new PriorAuthCaptureRequest
+            var request = Helper.GetAPriorAuthCaptureRequest(transactionId);
+            request.ExtendedInformation = new ExtendedInformation
             {
-                Amount = 10.25m,
-                TransactionId = transactionId, 
-                ExtendedInformation = new ExtendedInformation
-                {
-                    ServiceData = new ServiceData
-                    {
-                        GratuityAmount = 1.75m,
-                    }
-                },
-                DeveloperApplication = new DeveloperApplication
-                {
-                    DeveloperId = 12345678,
-                    Version = "1.2"
-                },
+                ServiceData = new ServiceData {GratuityAmount = 1.75m}
             };
 
             var apiContext = new APIContext();
@@ -226,6 +300,69 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             Assert.IsTrue(response.Success);
         }
 
+
+        /// <summary>
+        /// Unit Tests for an IncludeTip AuthorizationOnly request and a subsequent PriorAuthCapture request. Tests combined in one method to pass the
+        /// required transaction identifier and guaranteee the order of operation.
+        /// </summary>
+        [TestMethod]
+        public void Credit_Card_Present_IncludeTip_AuthorizationOnly_And_PriorAuthCapture_Requests_With_CATIndicator_Returns_Successfully()
+        {
+            int transactionId = Credit_Card_Present_IncludeTip_AuthorizationOnly_Request_Returns_With_CATIndicator_Successfully();
+
+            Credit_Card_Present_IncludeTip_PriorAuthCapture_Request_Returns_Successfully(transactionId);
+        }
+
+        /// <summary>
+        /// Successful response returned from a Credit Card Present Include Tip AuthorizationOnly request.
+        /// https://apidocs.securenet.com/docs/creditcardpresent.html?lang=JSON#includetip
+        /// </summary>
+        public int Credit_Card_Present_IncludeTip_AuthorizationOnly_Request_Returns_With_CATIndicator_Successfully()
+        {
+            // Arrange
+            var request = Helper.GetAnAuthorizeRequest();
+
+            var apiContext = new APIContext();
+            var controller = new PaymentsController();
+
+            // Act
+            var response = controller.ProcessRequest<AuthorizeResponse>(apiContext, request);
+
+            // Assert
+            Assert.IsNotNull(response);
+            Assert.IsTrue(response.Success);
+            Assert.IsNotNull(response.Transaction);
+            Assert.IsTrue(response.Transaction.TransactionId > 0);
+            Assert.AreEqual(response.Transaction.SoftDescriptor, Helper.ResponseSoftDescriptor);
+            Assert.AreEqual(response.Transaction.DynamicMCC, Helper.ResponseDynamicMCC);
+            return response.Transaction.TransactionId;
+        }
+
+        /// <summary>
+        /// Successful response returned from a Credit Card Present IncludTip PriorAuthCapture request.
+        /// https://apidocs.securenet.com/docs/creditcardpresent.html?lang=JSON#includetip
+        /// </summary>
+        public void Credit_Card_Present_IncludeTip_PriorAuthCapture_Request_With_CATIndicator_Returns_Successfully(int transactionId)
+        {
+            // Arrange
+            var request = Helper.GetAPriorAuthCaptureRequest(transactionId);
+            request.ExtendedInformation = new ExtendedInformation
+            {
+                ServiceData = new ServiceData { GratuityAmount = 1.75m },
+                AdditionalTerminalInfo = new AdditionalTerminalInfo{ CATIndicator = Helper.GetCATIndicatorValue() }
+            };
+            var apiContext = new APIContext();
+            var controller = new PaymentsController();
+
+            // Act
+            var response = controller.ProcessRequest<PriorAuthCaptureResponse>(apiContext, request);
+
+            // Assert
+            Assert.IsNotNull(response);
+            Assert.AreEqual(response.Transaction.CATIndicator, Helper.GetCATIndicatorValue());
+            Assert.IsTrue(response.Success);
+        }
+
         /// <summary>
         /// Successful response returned from a Credit Card Present Charge request that includes the address.
         /// https://apidocs.securenet.com/docs/creditcardpresent.html?lang=JSON#includeaddress
@@ -234,33 +371,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
         public void Credit_Card_Present_Charge_Request_Including_Address_Returns_Successfully()
         {
             // Arrange
-            var request = new ChargeRequest
-            {
-                Amount = 11.00m,
-                Card = new Card
-                {
-                    Number = "4444 3333 2222 1111",
-                    Cvv = "999",
-                    ExpirationDate = "04/2017",
-                    Address = new Address
-                    {
-                        Line1 = "123 Main St.",
-                        City = "Austin",
-                        State = "TX",
-                        Zip = "78759"
-                    }
-                },
-                DeveloperApplication = new DeveloperApplication
-                {
-                    DeveloperId = 12345678,
-                    Version = "1.2"
-                },
-                ExtendedInformation = new ExtendedInformation
-                {
-                    SoftDescriptor = Helper.RequestSoftDescriptor, 
-                    DynamicMCC = Helper.RequestDynamicMCC
-                },
-            };
+            var request = Helper.GetAChargeRequest();
 
             var apiContext = new APIContext();
             var controller = new PaymentsController();
@@ -275,6 +386,32 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             Assert.IsTrue(response.Success);
         }
 
+        /// <summary>
+        /// Successful response returned from a Credit Card Present Charge request with PosCardholderActivatedTerminal that includes the address.
+        /// https://apidocs.securenet.com/docs/creditcardpresent.html?lang=JSON#includeaddress
+        /// </summary>
+        [TestMethod]
+        public void Credit_Card_Present_Charge_Request_With_CATIndicator_Including_Address_Returns_Successfully()
+        {
+            // Arrange
+            var request = Helper.GetAChargeRequest();
+            
+            request.ExtendedInformation.AdditionalTerminalInfo = new AdditionalTerminalInfo
+            {
+                CATIndicator = Helper.GetCATIndicatorValue()
+            };
+
+            var apiContext = new APIContext();
+            var controller = new PaymentsController();
+
+            // Act
+            var response = controller.ProcessRequest<ChargeResponse>(apiContext, request);
+
+            // Assert
+            Assert.IsNotNull(response);
+            Assert.AreEqual(response.Transaction.CATIndicator, Helper.GetCATIndicatorValue());
+            Assert.IsTrue(response.Success);
+        }
 
         #endregion
 
@@ -701,25 +838,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
         public void Credits_Credit_An_Account_Request_Returns_Successfully()
         {
             // Arrange
-            var request = new CreditRequest
-            {
-                Amount = 10,
-                Card = new Card
-                {
-                    Number = "4444 3333 2222 1111",
-                    ExpirationDate = "01/2017"
-                },
-                DeveloperApplication = new DeveloperApplication
-                {
-                    DeveloperId = 12345678,
-                    Version = "1.2"
-                },
-                ExtendedInformation = new ExtendedInformation
-                {
-                    SoftDescriptor = Helper.RequestSoftDescriptor,
-                    DynamicMCC = Helper.RequestDynamicMCC
-                }
-            };
+            var request = Helper.GetACreditRequest();
 
             var apiContext = new APIContext();
             var controller = new PaymentsController();
@@ -731,6 +850,32 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             Assert.IsNotNull(response);
             Assert.AreEqual(response.Transaction.SoftDescriptor, Helper.ResponseSoftDescriptor);
             Assert.AreEqual(response.Transaction.DynamicMCC, Helper.ResponseDynamicMCC);
+            Assert.IsTrue(response.Success);
+        }
+
+        /// <summary>
+        /// Successful response returned from a Credit An Account request with PosCardholderActivatedTerminal.
+        /// https://apidocs.securenet.com/docs/credits.html?lang=csharp
+        /// </summary>
+        [TestMethod]
+        public void Credits_Credit_An_Account_Request_With_CATIndicator_Returns_Successfully()
+        {
+            // Arrange
+            var request = Helper.GetACreditRequest();
+            request.ExtendedInformation.AdditionalTerminalInfo = new AdditionalTerminalInfo
+            {
+                CATIndicator = Helper.GetCATIndicatorValue()
+            };
+
+            var apiContext = new APIContext();
+            var controller = new PaymentsController();
+
+            // Act
+            var response = controller.ProcessRequest<CreditResponse>(apiContext, request);
+
+            // Assert
+            Assert.IsNotNull(response);
+            Assert.AreEqual(response.Transaction.CATIndicator, Helper.GetCATIndicatorValue());
             Assert.IsTrue(response.Success);
         }
 
@@ -757,24 +902,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
         public int Refunds_Charge_Request_Returns_Successfully()
         {
             // Arrange
-            var request = new ChargeRequest
-            {
-                Amount = 11.00m,
-                Card = new Card
-                {
-                    TrackData = "%B4444333322221111^SECURENET^17041015432112345678?"
-                },
-                DeveloperApplication = new DeveloperApplication
-                {
-                    DeveloperId = 12345678,
-                    Version = "1.2"
-                },
-                ExtendedInformation = new ExtendedInformation
-                {
-                    SoftDescriptor = Helper.RequestSoftDescriptor,
-                    DynamicMCC = Helper.RequestDynamicMCC
-                }
-            };
+            var request = Helper.GetAChargeRequest();
 
             var apiContext = new APIContext();
             var controller = new PaymentsController();
@@ -800,15 +928,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
         public void Refunds_Refund_Transaction_Request_Returns_Successfully(int transactionId)
         {
             // Arrange
-            var request = new RefundRequest
-            {
-                TransactionId = transactionId,
-                DeveloperApplication = new DeveloperApplication
-                {
-                    DeveloperId = 12345678,
-                    Version = "1.2"
-                }
-            };
+            var request = Helper.GetARefundRequest(transactionId);
 
             var apiContext = new APIContext();
             var controller = new PaymentsController();
@@ -818,6 +938,69 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
 
             // Assert
             Assert.IsNotNull(response);
+            Assert.IsTrue(response.Success);
+        }
+
+        /// <summary>
+        /// Unit Tests for a Charge request and a subsequent Refund request with PosCardholderActivatedTerminal. Tests combined in one method to pass the
+        /// required transaction identifier and guaranteee the order of operation.
+        /// </summary>
+        [TestMethod]
+        public void Refunds_Charge_And_Refund_Requests_With_CATIndicator_Returns_Successfully()
+        {
+            int transactionId = Refunds_Charge_Request_With_CATIndicator_Returns_Successfully();
+
+            Refunds_Refund_Transaction_Request_With_CATIndicator_Returns_Successfully(transactionId);
+        }
+
+        /// <summary>
+        /// Successful response returned from a Credit Card Present Charge request, with PosCardholderActivatedTerminal.
+        /// https://apidocs.securenet.com/docs/creditcardpresent.html?lang=JSON#charge
+        /// </summary>
+        public int Refunds_Charge_Request_With_CATIndicator_Returns_Successfully()
+        {
+            // Arrange
+            var request = Helper.GetAChargeRequest();
+            
+            request.ExtendedInformation.AdditionalTerminalInfo = new AdditionalTerminalInfo
+            {
+                CATIndicator = Helper.GetCATIndicatorValue()
+            };
+
+            var apiContext = new APIContext();
+            var controller = new PaymentsController();
+
+            // Act
+            var response = controller.ProcessRequest<ChargeResponse>(apiContext, request);
+
+            // Assert
+            Assert.IsNotNull(response);
+            Assert.IsTrue(response.Success);
+            Assert.IsNotNull(response.Transaction);
+            Assert.AreEqual(response.Transaction.CATIndicator, Helper.GetCATIndicatorValue());
+            Assert.IsTrue(response.Transaction.TransactionId > 0);
+
+            return response.Transaction.TransactionId;
+        }
+
+        /// <summary>
+        /// Successful response returned from a Refund Transaction request, with PosCardholderActivatedTerminal.
+        /// https://apidocs.securenet.com/docs/refunds.html?lang=csharp
+        /// </summary>
+        public void Refunds_Refund_Transaction_Request_With_CATIndicator_Returns_Successfully(int transactionId)
+        {
+            // Arrange
+            var request = Helper.GetARefundRequest(transactionId);
+
+            var apiContext = new APIContext();
+            var controller = new PaymentsController();
+
+            // Act
+            var response = controller.ProcessRequest<RefundResponse>(apiContext, request);
+
+            // Assert
+            Assert.IsNotNull(response);
+            Assert.AreEqual(response.Transaction.CATIndicator, Helper.GetCATIndicatorValue());
             Assert.IsTrue(response.Success);
         }
 
@@ -844,24 +1027,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
         public int Voids_Charge_Request_Returns_Successfully()
         {
             // Arrange
-            var request = new ChargeRequest
-            {
-                Amount = 11.00m,
-                Card = new Card
-                {
-                    TrackData = "%B4444333322221111^SECURENET^17041015432112345678?;4444333322221111=17041015432112345678?"
-                },
-                DeveloperApplication = new DeveloperApplication
-                {
-                    DeveloperId = 12345678,
-                    Version = "1.2"
-                },
-                ExtendedInformation = new ExtendedInformation
-                {
-                    SoftDescriptor = Helper.RequestSoftDescriptor,
-                    DynamicMCC = Helper.RequestDynamicMCC
-                },
-            };
+            var request = Helper.GetAChargeRequest();
 
             var apiContext = new APIContext();
             var controller = new PaymentsController();
@@ -887,15 +1053,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
         public void Voids_Void_Transaction_Request_Returns_Successfully(int transactionId)
         {
             // Arrange
-            var request = new VoidRequest
-            {
-                TransactionId = transactionId,
-                DeveloperApplication = new DeveloperApplication
-                {
-                    DeveloperId = 12345678,
-                    Version = "1.2"
-                }
-            };
+            var request = Helper.GetAVoidRequest(transactionId);
 
             var apiContext = new APIContext();
             var controller = new PaymentsController();
@@ -905,6 +1063,69 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
 
             // Assert
             Assert.IsNotNull(response);
+            Assert.IsTrue(response.Success);
+        }
+
+        /// <summary>
+        /// Unit Tests for a Chrage request and a subsequent Void request. Tests combined in one method to pass the
+        /// required transaction identifier and guaranteee the order of operation.
+        /// </summary>
+        [TestMethod]
+        public void Voids_Charge_And_Void_Requests_With_CATIndicator_Returns_Successfully()
+        {
+            int transactionId = Voids_Charge_Request_With_CATIndicator_Returns_Successfully();
+
+            Voids_Void_Transaction_Request_With_CATIndicator_Returns_Successfully(transactionId);
+        }
+
+        /// <summary>
+        /// Successful response returned from a Credit Card Present Charge request with PosCardholderActivatedTerminal.
+        /// https://apidocs.securenet.com/docs/creditcardpresent.html?lang=JSON#charge
+        /// </summary>
+        public int Voids_Charge_Request_With_CATIndicator_Returns_Successfully()
+        {
+            // Arrange
+            var request = Helper.GetAChargeRequest();
+            
+            request.ExtendedInformation.AdditionalTerminalInfo = new AdditionalTerminalInfo
+            {
+                CATIndicator = Helper.GetCATIndicatorValue()
+            };
+
+            var apiContext = new APIContext();
+            var controller = new PaymentsController();
+
+            // Act
+            var response = controller.ProcessRequest<ChargeResponse>(apiContext, request);
+
+            // Assert
+            Assert.IsNotNull(response);
+            Assert.IsTrue(response.Success);
+            Assert.IsNotNull(response.Transaction);
+            Assert.AreEqual(response.Transaction.CATIndicator, Helper.GetCATIndicatorValue());
+            Assert.IsTrue(response.Transaction.TransactionId > 0);
+
+            return response.Transaction.TransactionId;
+        }
+
+        /// <summary>
+        /// Successful response returned from a Void Transaction request with PosCardholderActivatedTerminal.
+        /// https://apidocs.securenet.com/docs/voids.html?lang=csharp
+        /// </summary>
+        public void Voids_Void_Transaction_Request_With_CATIndicator_Returns_Successfully(int transactionId)
+        {
+            // Arrange
+            var request = Helper.GetAVoidRequest(transactionId);
+
+            var apiContext = new APIContext();
+            var controller = new PaymentsController();
+
+            // Act
+            var response = controller.ProcessRequest<VoidResponse>(apiContext, request);
+
+            // Assert
+            Assert.IsNotNull(response);
+            Assert.AreEqual(response.Transaction.CATIndicator, Helper.GetCATIndicatorValue());
             Assert.IsTrue(response.Success);
         }
 

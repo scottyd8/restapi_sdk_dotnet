@@ -39,6 +39,12 @@ namespace SecureNetRestApiSDK.Api.Models
         [JsonProperty("storeNumber")]
         public string StoreNumber { get; set; }
 
+        /// <summary>
+        /// Represents the value for a Cardholder Activated Terminal type of transaction.
+        /// </summary>
+        [JsonProperty("catIndicator")]
+        public string CATIndicator { get; set; }
+
         #endregion
     }
 }
