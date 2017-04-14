@@ -159,6 +159,9 @@ namespace SecureNetRestApiSDK.Api.Models
         [JsonProperty("dynamicMCC")]
         public string DynamicMCC { get; set; }
 
+        [JsonProperty("catIndicator")]
+        public string CATIndicator { get; set; }
+
         #endregion
     }
 }

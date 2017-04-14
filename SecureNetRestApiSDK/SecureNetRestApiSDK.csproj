@@ -96,6 +96,7 @@
     <Compile Include="Api\Requests\BatchCurrentRequest.cs" />
     <Compile Include="Api\Requests\BatchRetrieveRequest.cs" />
     <Compile Include="Api\Requests\BatchCloseRequest.cs" />
+    <Compile Include="Api\Requests\VerifyRequest.cs" />
     <Compile Include="Api\Requests\TransactionRetrieveRequest.cs" />
     <Compile Include="Api\Requests\TransactionSearchRequest.cs" />
     <Compile Include="Api\Models\UserDefinedField.cs" />
@@ -130,6 +131,7 @@
     <Compile Include="Api\Responses\AddPaymentMethodResponse.cs" />
     <Compile Include="Api\Responses\AddRecurringPaymentPlanResponse.cs" />
     <Compile Include="Api\Responses\AddVariablePaymentPlanResponse.cs" />
+    <Compile Include="Api\Responses\VerifyResponse.cs" />
     <Compile Include="Api\Responses\AuthorizeResponse.cs" />
     <Compile Include="Api\Responses\BatchCloseResponse.cs" />
     <Compile Include="Api\Responses\BatchCurrentResponse.cs" />

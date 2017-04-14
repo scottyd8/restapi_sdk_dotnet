@@ -533,28 +533,9 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
         public void SecureNet_Vault_Store_Account_After_Charge_Request_Returns_Successfully()
         {
             // Arrange
-            var request = new ChargeRequest
-            {
-                Amount = 11.00m,
-                AddToVault = true,
-                Card = new Card
-                {
-                    Number = "4444 3333 2222 1111",
-                    ExpirationDate = "04/2017",
-                    Address = new Address
-                    {
-                        Line1 = "123 Main St.",
-                        City = "Austin",
-                        State = "TX",
-                        Zip = "78759"
-                    }
-                },
-                DeveloperApplication = new DeveloperApplication
-                {
-                    DeveloperId = 12345678,
-                    Version = "1.2"
-                }
-            };
+            var request = Helper.GetAChargeRequest();
+            
+            request.AddToVault = true;
 
             var apiContext = new APIContext();
             var controller = new CustomersController();
@@ -574,22 +555,13 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
         public void SecureNet_Vault_Pay_With_Stored_Vault_Account_Request_Returns_Successfully(string customerId, string paymentMethodId)
         {
             // Arrange
-            var request = new ChargeRequest
+            var request = Helper.GetAChargeRequest();
+            request.PaymentVaultToken = new PaymentVaultToken
             {
-                Amount = 11.00m,
-                PaymentVaultToken = new PaymentVaultToken
-                {
-                    CustomerId = customerId,
-                    PaymentMethodId = paymentMethodId,
-                    PaymentType = "CREDIT_CARD"
-                },
-                DeveloperApplication = new DeveloperApplication
-                {
-                    DeveloperId = 12345678,
-                    Version = "1.2"
-                }
+                CustomerId = customerId,
+                PaymentMethodId = paymentMethodId,
+                PaymentType = "CREDIT_CARD"
             };
-
             var apiContext = new APIContext();
             var controller = new CustomersController();
 
@@ -601,6 +573,93 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             Assert.IsTrue(response.Success);
         }
 
+        /// <summary>
+        /// Successful response returned from a Storing Acount After Charge request, with PosCardholderActivatedTerminal.
+        /// https://apidocs.securenet.com/docs/vault.html?lang=csharp#storedaccount
+        /// </summary>
+        [TestMethod]
+        public void SecureNet_Vault_Store_Account_After_Charge_Request_With_CATIndicator_Returns_Successfully()
+        {
+            // Arrange
+            var request = Helper.GetAChargeRequest();
+            
+            request.AddToVault = true;
+            request.ExtendedInformation.AdditionalTerminalInfo = new AdditionalTerminalInfo
+            {
+                CATIndicator = Helper.GetCATIndicatorValue()
+            };
+
+            var apiContext = new APIContext();
+            var controller = new CustomersController();
+
+            // Act
+            var response = controller.ProcessRequest<ChargeResponse>(apiContext, request);
+
+            // Assert
+            Assert.IsNotNull(response);
+            Assert.AreEqual(response.Transaction.CATIndicator, Helper.GetCATIndicatorValue());
+            Assert.IsTrue(response.Success);
+        }
+
+        /// <summary>
+        /// Successful response returned from a Pay with Stored Vault Account request, with PosCardholderActivatedTerminal.
+        /// https://apidocs.securenet.com/docs/vault.html?lang=csharp#payaccount
+        /// </summary>
+
+        /// <summary>
+        /// Unit Tests for Create, Retrieve, Charge, Update and Delete Payment Account requests. Tests combined in one method to pass the
+        /// required payment method identifier and to guaranteee the order of operation.
+        /// </summary>
+        [TestMethod]
+        public void SecureNet_Vault_Create_Retrieve_Charge_Update_And_Delete_Payment_Account_Requests_Wtih_CATIndicator_Returns_Successfully()
+        {
+            // Create the Customer
+            string customerId = SecureNet_Vault_Create_Customer_Request_Returns_Successfully();
+
+            // Create the Payment Account
+            string paymentMethodId = SecureNet_Vault_Create_Payment_Account_Request_Returns_Successfully(customerId);
+
+            // Retrieve the Payment Account
+            SecureNet_Vault_Retrieve_Payment_Account_Request_Returns_Successfully(customerId, paymentMethodId);
+
+            // Pay using a Stored Vault Account
+            SecureNet_Vault_Pay_With_Stored_Vault_Account_Request_With_CATIndicator_Returns_Successfully(customerId, paymentMethodId);
+
+            // Update the Payment Account
+            SecureNet_Vault_Update_Payment_Account_Request_Returns_Successfully(customerId, paymentMethodId);
+
+            // Delete the Payment Account
+            SecureNet_Vault_Delete_Payment_Account_Request_Returns_Successfully(customerId, paymentMethodId);
+
+            // Delete the Customer
+            //TODO
+        }
+
+        public void SecureNet_Vault_Pay_With_Stored_Vault_Account_Request_With_CATIndicator_Returns_Successfully(string customerId, string paymentMethodId)
+        {
+            // Arrange
+            var request = Helper.GetAChargeRequest();
+            request.PaymentVaultToken = new PaymentVaultToken
+            {
+                CustomerId = customerId,
+                PaymentMethodId = paymentMethodId,
+                PaymentType = "CREDIT_CARD"
+            };
+            request.ExtendedInformation.AdditionalTerminalInfo = new AdditionalTerminalInfo
+            {
+                CATIndicator = Helper.GetCATIndicatorValue()
+            };
+            var apiContext = new APIContext();
+            var controller = new CustomersController();
+
+            // Act
+            var response = controller.ProcessRequest<ChargeResponse>(apiContext, request);
+
+            // Assert
+            Assert.IsNotNull(response);
+            Assert.AreEqual(response.Transaction.CATIndicator, Helper.GetCATIndicatorValue());
+            Assert.IsTrue(response.Success);
+        }
         #endregion
 
         #region RecurringBilling
