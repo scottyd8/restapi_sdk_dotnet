@@ -242,7 +242,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 Card = new Card
                 {
                     Number = "4444 3333 2222 1111",
-                    ExpirationDate = "04/2017",
+                    ExpirationDate = "04/2018",
                     Address = new Address
                     {
                         Line1 = "123 Main St.",
@@ -346,7 +346,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 {
                     Number = "4444 3333 2222 1111",
                     Cvv = "999",
-                    ExpirationDate = "04/2017",
+                    ExpirationDate = "04/2018",
                     Address = new Address
                     {
                         Line1 = "123 Main St.",
@@ -492,7 +492,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 Card = new Card
                 {
                     Number = "4444 3333 2222 1111",
-                    ExpirationDate = "04/2017",
+                    ExpirationDate = "04/2018",
                     FirstName = "Jack",
                     LastName = "Test",
                     Address = new Address
@@ -540,7 +540,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 Card = new Card
                 {
                     Number = "4444 3333 2222 1111",
-                    ExpirationDate = "04/2017",
+                    ExpirationDate = "04/2018",
                     Address = new Address
                     {
                         Line1 = "123 Main St.",
@@ -606,8 +606,8 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
         #region RecurringBilling
 
         /// <summary>
-        /// Unit Tests for Creating a Payment Account, Creating a Recurring Payment Plan, Updating the Recurring Payment Plan, Retrieving the Recurring Payment Plan, and 
-        /// deleting the Recurring Payment Plan requests. Tests combined in one method to pass the required payment method identifier, the plan identifier and to guaranteee the order of operation.
+        /// Unit Tests for Creating a Payment Account, Creating a Recurring Payment Plan, Updating the Recurring Payment Plan, and Retrieving the Recurring Payment Plan requests. 
+        /// Tests combined in one method to pass the required payment method identifier, the plan identifier and to guaranteee the order of operation.
         /// </summary>
         [TestMethod]
         public void Recurring_Billing_Create_Retrieve_Update_And_Delete_Recurring_Payment_Plan_Requests_Returns_Successfully()
@@ -655,7 +655,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                     Month = 6,
                     Frequency = 10,
                     Amount = 22.95m,
-                    StartDate = Convert.ToDateTime("10/01/2017"),
+                    StartDate = Convert.ToDateTime("10/01/2018"),
                     EndDate = Convert.ToDateTime("10/01/2035"),
                     MaxRetries = 4,
                     PrimaryPaymentMethodId = paymentMethodId,
@@ -734,12 +734,12 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                     Month = 6,
                     Frequency = 10,
                     Amount = 52.95m,
-                    StartDate = Convert.ToDateTime("09/01/2017"),
-                    EndDate = Convert.ToDateTime("12/01/2018"),
+                    StartDate = Convert.ToDateTime("09/01/2018"),
+                    EndDate = Convert.ToDateTime("12/01/2020"),
                     MaxRetries = 4,
                     Notes = "This is an updated recurring plan",
                     Active = true,
-                    SoftDescriptor = Helper.RequestSoftDescriptor, 
+                    SoftDescriptor = Helper.RequestSoftDescriptor,
                     DynamicMCC = Helper.RequestDynamicMCC
                 },
                 IncludeRawObjects = true,
@@ -784,8 +784,14 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             Recurring_Billing_Retrieve_Payment_Plan_Request_Returns_Successfully(customerId, planId);
 
             // Update the Installment Plan
+            //Recurring_Billing_Update_Installment_Plan_Request_Returns_Successfully(customerId, planId);
+
+            // Delete the Payment Account
+            // SecureNet_Vault_Delete_Payment_Account_Request_Returns_Successfully(customerId, paymentMethodId);
+
+            // Update the Installment Plan
             Recurring_Billing_Update_Installment_Plan_Request_Returns_Successfully(customerId, planId);
-            
+
             // Delete the Installment Plan
             Recurring_Billing_Delete_Payment_Plan_Request_Returns_Successfully(customerId, planId);
 
@@ -817,7 +823,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                     RemainderAmount = 12.90m,
                     BalloonPaymentAddedTo = "FIRST",
                     RemainderAmountAddedTo = "LAST",
-                    StartDate = Convert.ToDateTime("10/1/2017"),
+                    StartDate = Convert.ToDateTime("10/1/2018"),
                     EndDate = Convert.ToDateTime("10/1/2020"),
                     MaxRetries = 4,
                     PrimaryPaymentMethodId = paymentMethodId,
@@ -852,9 +858,8 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                             UdfName = "Udf5",
                             UdfValue = "Udf5_Value"
                         }
-                    }                    
+                    },
                 },
-
                 DeveloperApplication = new DeveloperApplication
                 {
                     DeveloperId = 12345678,
@@ -900,11 +905,11 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                     RemainderAmount = 17.90m,
                     BalloonPaymentAddedTo = "FIRST",
                     RemainderAmountAddedTo = "LAST",
-                    StartDate = Convert.ToDateTime("11/01/2017"),
+                    StartDate = Convert.ToDateTime("11/01/2018"),
                     EndDate = Convert.ToDateTime("10/01/2020"),
                     MaxRetries = 4,
                     Notes = "This is an updated installment plan",
-                    Active = true, 
+                    Active = true,
                     SoftDescriptor = Helper.RequestSoftDescriptor,
                     DynamicMCC = Helper.RequestDynamicMCC
                 },
@@ -927,8 +932,6 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             Assert.AreEqual(response.StoredInstallmentPaymentPlan.DynamicMCC, Helper.ResponseDynamicMCC);
             Assert.IsTrue(response.Success);
         }
-
-
 
         /// <summary>
         /// Unit Tests for Creating a Payment Account, Creating an Variable Plan, Updating the Variable Plan, Retrieving the Variable Plan, and 
@@ -961,12 +964,11 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             // Delete the Customer
             //TODO
         }
-        
+
         /// <summary>
         /// Successful response returned from an Create Variable Payment Plan request.
         /// https://apidocs.securenet.com/docs/recurringbilling.html?lang=csharp#variable
         /// </summary>
-     
         public string Recurring_Billing_Create_Variable_Payment_Plan_Request_Returns_Successfully(string customerId, string paymentMethodId)
         {
             // Arrange
@@ -975,7 +977,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 CustomerId = customerId,
                 Plan = new VariablePaymentPlan
                 {
-                    PlanStartDate = Convert.ToDateTime("10/01/2017"),
+                    PlanStartDate = Convert.ToDateTime("10/01/2018"),
                     PlanEndDate = Convert.ToDateTime("01/01/2020"),
                     PrimaryPaymentMethodId = paymentMethodId,
                     ScheduledPayments = new List<StoredScheduledVariablePaymentPlan>
@@ -983,7 +985,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                         new StoredScheduledVariablePaymentPlan
                         {
                             Amount = 132.89m,
-                            PaymentDate = Convert.ToDateTime("10/01/2017"),
+                            PaymentDate = Convert.ToDateTime("10/1/2018"),
                         }
 
                     },
@@ -1017,7 +1019,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                             UdfValue = "Udf5_Value"
                         }
                     },
-                    SoftDescriptor = Helper.RequestSoftDescriptor, 
+                    SoftDescriptor = Helper.RequestSoftDescriptor,
                     DynamicMCC = Helper.RequestDynamicMCC
                 },
                 DeveloperApplication = new DeveloperApplication
@@ -1047,11 +1049,10 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
         /// Successful response returned from an Update Variable Payment Plan request.
         /// https://apidocs.securenet.com/docs/recurringbilling.html?lang=csharp#updatevariable
         /// </summary>
-        public void Recurring_Billing_Update_Variable_Payment_Plan_Request_Returns_Successfully(string customerId,
-            string planId)
+        public void Recurring_Billing_Update_Variable_Payment_Plan_Request_Returns_Successfully(string customerId, string planId)
         {
-            //Arrange
-            var request = new UpdateVariablePaymentPlanRequest()
+            // Arrange
+            var request = new UpdateVariablePaymentPlanRequest
             {
                 CustomerId = customerId,
                 PlanId = planId,
@@ -1059,21 +1060,21 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 {
                     SoftDescriptor = Helper.RequestSoftDescriptor,
                     DynamicMCC = Helper.RequestDynamicMCC,
-                    PlanStartDate = Convert.ToDateTime("07/12/2016"),
-                    ScheduledPayments = new List<StoredScheduledVariablePaymentPlan>()
+                    PlanStartDate = Convert.ToDateTime("07/12/2018"),
+                    ScheduledPayments = new List<StoredScheduledVariablePaymentPlan>
                     {
-                        new StoredScheduledVariablePaymentPlan()
+                        new StoredScheduledVariablePaymentPlan
                         {
                             ScheduleId = 1093749,
-                            PaymentDate = Convert.ToDateTime("12/05/2017"),
-                            Amount = 200m
+                            PaymentDate = Convert.ToDateTime("12/05/2018"),
+                            Amount = 200
                         }
 
                     },
                     MaxRetries = 4,
                     Notes = "This is an updated variable Payment Plan"
                 },
-                DeveloperApplication = new DeveloperApplication()
+                DeveloperApplication = new DeveloperApplication
                 {
                     DeveloperId = 12345678,
                     Version = "1.2"
@@ -1091,10 +1092,8 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             Assert.AreEqual(response.StoredVariablePaymentPlan.SoftDescriptor, Helper.ResponseSoftDescriptor);
             Assert.AreEqual(response.StoredVariablePaymentPlan.DynamicMCC, Helper.ResponseDynamicMCC);
             Assert.IsTrue(response.Success);
-            
         }
 
-        
         /// <summary>
         /// Successful response returned from a Retrieve Payment Plan request.
         /// https://apidocs.securenet.com/docs/recurringbilling.html?lang=csharp#retrieve

@@ -1,5 +1,4 @@
-﻿
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using SecureNetRestApiSDK.Api.Models;
 
 namespace SecureNetRestApiSDK.Api.Responses

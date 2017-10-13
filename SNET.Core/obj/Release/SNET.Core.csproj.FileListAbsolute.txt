@@ -8,3 +8,13 @@ C:\general\sdks\restapi_sdk_dotnet-master\SNET.Core\bin\Release\System.Net.Http.
 C:\general\sdks\restapi_sdk_dotnet-master\SNET.Core\bin\Release\System.Web.Http.xml
 C:\general\sdks\restapi_sdk_dotnet-master\SNET.Core\obj\Release\SNET.Core.dll
 C:\general\sdks\restapi_sdk_dotnet-master\SNET.Core\obj\Release\SNET.Core.pdb
+C:\securenet_restapi_sdk_dotnet\restapi_sdk_dotnet-master\SNET.Core\bin\Release\SNET.Core.dll.config
+C:\securenet_restapi_sdk_dotnet\restapi_sdk_dotnet-master\SNET.Core\bin\Release\SNET.Core.dll
+C:\securenet_restapi_sdk_dotnet\restapi_sdk_dotnet-master\SNET.Core\bin\Release\SNET.Core.pdb
+C:\securenet_restapi_sdk_dotnet\restapi_sdk_dotnet-master\SNET.Core\bin\Release\Newtonsoft.Json.dll
+C:\securenet_restapi_sdk_dotnet\restapi_sdk_dotnet-master\SNET.Core\bin\Release\nunit.framework.dll
+C:\securenet_restapi_sdk_dotnet\restapi_sdk_dotnet-master\SNET.Core\bin\Release\Newtonsoft.Json.xml
+C:\securenet_restapi_sdk_dotnet\restapi_sdk_dotnet-master\SNET.Core\bin\Release\nunit.framework.xml
+C:\securenet_restapi_sdk_dotnet\restapi_sdk_dotnet-master\SNET.Core\obj\Release\SNET.Core.csprojResolveAssemblyReference.cache
+C:\securenet_restapi_sdk_dotnet\restapi_sdk_dotnet-master\SNET.Core\obj\Release\SNET.Core.dll
+C:\securenet_restapi_sdk_dotnet\restapi_sdk_dotnet-master\SNET.Core\obj\Release\SNET.Core.pdb

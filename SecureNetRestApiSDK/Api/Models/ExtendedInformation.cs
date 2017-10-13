@@ -50,8 +50,9 @@ namespace SecureNetRestApiSDK.Api.Models
         /// <summary>
         /// Additional data for remote orders. Required in the case of a mail, phone, or ecommerce transaction.
         /// </summary>
-        [JsonProperty("mailOrTelephoneData")]
-        public MailOrTelephoneData MailOrTelephoneData { get; set; }
+        [JsonProperty("mailOrTelephoneOrderData")]
+        public MailOrTelephoneOrderData MailOrTelephoneOrderData { get; set; }
+
 
         /// <summary>
         /// Restaurant-related transaction information.
@@ -94,6 +95,12 @@ namespace SecureNetRestApiSDK.Api.Models
         /// </summary>
         [JsonProperty("dynamicMCC")]
         public String DynamicMCC { get; set; }
+
+        /// <summary>
+        /// Information related to EBT.
+        /// </summary>
+        [JsonProperty("ebtData")]
+        public Ebt EbtData { get; set; }
 
         #endregion
     }

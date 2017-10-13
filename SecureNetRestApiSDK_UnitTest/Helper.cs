@@ -26,7 +26,7 @@ namespace SecureNetRestApiSDK_UnitTest
             get
             {
                 InitSoftDescriptorConfiguration();
-                return Convert.ToBoolean(_isSoftDescriptorEnabled) ? SoftDescriptorValue : string.Empty;
+                return Convert.ToBoolean(_isSoftDescriptorEnabled) ? SoftDescriptorValue : null;
             }
         }
 
@@ -52,7 +52,7 @@ namespace SecureNetRestApiSDK_UnitTest
             get
             {
                 InitDynamicMCCConfiguration();
-                return Convert.ToBoolean(_isDynamicMCCEnabled) ? DynamicMCC : string.Empty;
+                return Convert.ToBoolean(_isDynamicMCCEnabled) ? DynamicMCC : null;
             }
         }
 

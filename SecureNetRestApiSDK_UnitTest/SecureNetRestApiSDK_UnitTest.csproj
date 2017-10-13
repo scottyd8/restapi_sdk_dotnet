@@ -71,6 +71,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Controllers\AccountsControllerTests.cs" />
     <Compile Include="Controllers\BatchesControllerTests.cs" />
     <Compile Include="Controllers\CustomersControllerTests.cs" />
     <Compile Include="Controllers\PaymentsControllerTests.cs" />

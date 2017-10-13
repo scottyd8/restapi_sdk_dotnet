@@ -61,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\Controllers\AccountsController.cs" />
     <Compile Include="Api\Controllers\BaseController.cs" />
     <Compile Include="Api\Controllers\BatchesController.cs" />
     <Compile Include="Api\Controllers\CustomersController.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Api\Models\Card.cs" />
     <Compile Include="Api\Models\Check.cs" />
     <Compile Include="Api\Models\DeveloperApplication.cs" />
+    <Compile Include="Api\Models\Ebt.cs" />
     <Compile Include="Api\Models\Encryption.cs" />
     <Compile Include="Api\Models\ExtendedInformation.cs" />
     <Compile Include="Api\Models\InstallmentPaymentPlan.cs" />
@@ -96,6 +98,9 @@
     <Compile Include="Api\Requests\BatchCurrentRequest.cs" />
     <Compile Include="Api\Requests\BatchRetrieveRequest.cs" />
     <Compile Include="Api\Requests\BatchCloseRequest.cs" />
+    <Compile Include="Api\Requests\CaptureRequest.cs" />
+    <Compile Include="Api\Requests\DeletePaymentPlanRequest.cs" />
+    <Compile Include="Api\Requests\InquiryRequest.cs" />
     <Compile Include="Api\Requests\TransactionRetrieveRequest.cs" />
     <Compile Include="Api\Requests\TransactionSearchRequest.cs" />
     <Compile Include="Api\Models\UserDefinedField.cs" />
@@ -110,7 +115,6 @@
     <Compile Include="Api\Requests\RetrieveCustomerRequest.cs" />
     <Compile Include="Api\Requests\CreateCustomerRequest.cs" />
     <Compile Include="Api\Requests\CreditRequest.cs" />
-    <Compile Include="Api\Requests\DeletePaymentPlanRequest.cs" />
     <Compile Include="Api\Requests\PriorAuthCaptureRequest.cs" />
     <Compile Include="Api\Requests\RefundRequest.cs" />
     <Compile Include="Api\Requests\RemovePaymentMethodRequest.cs" />
@@ -138,6 +142,7 @@
     <Compile Include="Api\Responses\CreateCustomerResponse.cs" />
     <Compile Include="Api\Responses\CreditResponse.cs" />
     <Compile Include="Api\Responses\DeletePaymentPlanResponse.cs" />
+    <Compile Include="Api\Responses\InquiryResponse.cs" />
     <Compile Include="Api\Responses\PriorAuthCaptureResponse.cs" />
     <Compile Include="Api\Responses\RefundResponse.cs" />
     <Compile Include="Api\Responses\RemovePaymentMethodResponse.cs" />
@@ -160,6 +165,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

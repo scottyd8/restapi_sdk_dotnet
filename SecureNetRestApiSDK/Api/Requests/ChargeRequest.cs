@@ -83,7 +83,7 @@ namespace SecureNetRestApiSDK.Api.Requests
         /// </summary>
         public Encryption Encryption { get; set; }
 
-        #endregion
+       #endregion
 
         #region Methods
 

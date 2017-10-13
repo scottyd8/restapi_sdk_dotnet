@@ -1,4 +1,4 @@
-﻿using System.Web.Configuration;
+﻿using System.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SecureNetRestApiSDK.Api.Controllers;
 using SecureNetRestApiSDK.Api.Models;
@@ -37,7 +37,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 Amount = 11.00m,
                 Card = new Card
                 {
-                    TrackData = "%B4444333322221111^SECURENET^17041015432112345678?;4444333322221111=17041015432112345678?",
+                    TrackData = "%B4444333322221111^SECURENET^18041015432112345678?;4444333322221111=18041015432112345678?",
                 },
                 DeveloperApplication = new DeveloperApplication
                 {
@@ -48,7 +48,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 {
                     SoftDescriptor = Helper.RequestSoftDescriptor,
                     DynamicMCC = Helper.RequestDynamicMCC
-                },
+                }
             };
 
             var apiContext = new APIContext();
@@ -64,6 +64,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             Assert.IsTrue(response.Transaction.TransactionId > 0);
             Assert.AreEqual(response.Transaction.SoftDescriptor, Helper.ResponseSoftDescriptor);
             Assert.AreEqual(response.Transaction.DynamicMCC, Helper.ResponseDynamicMCC);
+
             return response.Transaction.TransactionId;
         }
 
@@ -109,7 +110,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 Amount = 11.00m,
                 Card = new Card
                 {
-                    TrackData = "%B4444333322221111^SECURENET^17041015432112345678?;4444333322221111=17041015432112345678?"
+                    TrackData = "%B4444333322221111^SECURENET^18041015432112345678?;4444333322221111=18041015432112345678?"
                 },
                 DeveloperApplication = new DeveloperApplication
                 {
@@ -120,7 +121,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 {
                     SoftDescriptor = Helper.RequestSoftDescriptor,
                     DynamicMCC = Helper.RequestDynamicMCC
-                },
+                }
             };
 
             var apiContext = new APIContext();
@@ -157,10 +158,10 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             // Arrange
             var request = new AuthorizeRequest
             {
-                Amount = 11.00m,
+                Amount = 17.00m,
                 Card = new Card
                 {
-                    TrackData = "%B4444333322221111^SECURENET^17041015432112345678?;4444333322221111=17041015432112345678?"
+                    TrackData = "%B4444333322221111^SECURENET^18041015432112345678?;4444333322221111=18041015432112345678?"
                 },
                 DeveloperApplication = new DeveloperApplication
                 {
@@ -171,7 +172,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 {
                     SoftDescriptor = Helper.RequestSoftDescriptor,
                     DynamicMCC = Helper.RequestDynamicMCC
-                },
+                }
             };
 
             var apiContext = new APIContext();
@@ -187,6 +188,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             Assert.IsTrue(response.Transaction.TransactionId > 0);
             Assert.AreEqual(response.Transaction.SoftDescriptor, Helper.ResponseSoftDescriptor);
             Assert.AreEqual(response.Transaction.DynamicMCC, Helper.ResponseDynamicMCC);
+
             return response.Transaction.TransactionId;
         }
 
@@ -212,7 +214,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 {
                     DeveloperId = 12345678,
                     Version = "1.2"
-                },
+                }
             };
 
             var apiContext = new APIContext();
@@ -241,7 +243,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 {
                     Number = "4444 3333 2222 1111",
                     Cvv = "999",
-                    ExpirationDate = "04/2017",
+                    ExpirationDate = "04/2018",
                     Address = new Address
                     {
                         Line1 = "123 Main St.",
@@ -257,9 +259,9 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 },
                 ExtendedInformation = new ExtendedInformation
                 {
-                    SoftDescriptor = Helper.RequestSoftDescriptor, 
+                    SoftDescriptor = Helper.RequestSoftDescriptor,
                     DynamicMCC = Helper.RequestDynamicMCC
-                },
+                }
             };
 
             var apiContext = new APIContext();
@@ -306,7 +308,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 {
                     Number = "4444 3333 2222 1111",
                     Cvv = "999",
-                    ExpirationDate = "04/2017",
+                    ExpirationDate = "04/2018",
                     Address = new Address
                     {
                         Line1 = "123 Main St.",
@@ -391,7 +393,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 {
                     Number = "4444 3333 2222 1111",
                     Cvv = "999",
-                    ExpirationDate = "04/2017",
+                    ExpirationDate = "04/2018",
                     Address = new Address
                     {
                         Line1 = "123 Main St.",
@@ -441,7 +443,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 {
                     Number = "4444 3333 2222 1111",
                     Cvv = "999",
-                    ExpirationDate = "04/2017",
+                    ExpirationDate = "04/2018",
                     Address = new Address
                     {
                         Line1 = "123 Main St.",
@@ -475,7 +477,9 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             Assert.AreEqual(response.Transaction.DynamicMCC, Helper.ResponseDynamicMCC);
             Assert.IsTrue(response.Success);
         }
-        
+
+
+
         /// <summary>
         /// Successful response returned from an Charge using Tokenization request.
         /// https://apidocs.securenet.com/docs/creditcardnotpresent.html?lang=csharp#tokenization
@@ -489,7 +493,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 PaymentVaultToken = new PaymentVaultToken
                 {
                     PaymentMethodId = token,
-                    PublicKey = "278DCC4B-85FE-485D-AFDD-9927AC4CA229"
+                    PublicKey = ConfigurationManager.AppSettings["publicKey"]
                 },
                 AddToVault = true,
                 ExtendedInformation = new ExtendedInformation
@@ -554,7 +558,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             var response = controller.ProcessRequest<ChargeResponse>(apiContext, request);
 
             // Assert
-            Assert.IsNotNull(response); 
+            Assert.IsNotNull(response);
             Assert.IsTrue(response.Success);
         }
 
@@ -707,7 +711,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 Card = new Card
                 {
                     Number = "4444 3333 2222 1111",
-                    ExpirationDate = "01/2017"
+                    ExpirationDate = "01/2018"
                 },
                 DeveloperApplication = new DeveloperApplication
                 {
@@ -762,7 +766,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 Amount = 11.00m,
                 Card = new Card
                 {
-                    TrackData = "%B4444333322221111^SECURENET^17041015432112345678?"
+                    TrackData = "%B4444333322221111^SECURENET^18041015432112345678?"
                 },
                 DeveloperApplication = new DeveloperApplication
                 {
@@ -849,7 +853,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 Amount = 11.00m,
                 Card = new Card
                 {
-                    TrackData = "%B4444333322221111^SECURENET^17041015432112345678?;4444333322221111=17041015432112345678?"
+                    TrackData = "%B4444333322221111^SECURENET^18041015432112345678?;4444333322221111=18041015432112345678?"
                 },
                 DeveloperApplication = new DeveloperApplication
                 {
@@ -860,7 +864,7 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
                 {
                     SoftDescriptor = Helper.RequestSoftDescriptor,
                     DynamicMCC = Helper.RequestDynamicMCC
-                },
+                }
             };
 
             var apiContext = new APIContext();
@@ -908,6 +912,339 @@ namespace SecureNetRestApiSDK_UnitTest.Controllers
             Assert.IsTrue(response.Success);
         }
 
-        #endregion
+        #endregion Voids
+
+        /*
+        #region Ebt
+
+        /// <summary>
+        /// Successful response returned from a EBT Card Present Charge request.
+        /// https://apidocs.securenet.com/docs/creditcardpresent.html?lang=JSON#charge
+        /// </summary>
+        [TestMethod]
+        public void Ebt_Card_Present_Charge_Request_Returns_Successfully()
+        {
+            // Arrange
+            var request = new ChargeRequest
+            {
+                Amount = 11.00m,
+                Card = new Card
+                {
+                    TrackData = ";5081480000001235=20121000000112345678?",
+                    PinBlock = "B50CBCC24FC053EC",
+                    Ksn = "10002000090002A00039"
+                },
+                DeveloperApplication = new DeveloperApplication
+                {
+                    DeveloperId = 12345678,
+                    Version = "1.2"
+                },
+                ExtendedInformation = new ExtendedInformation
+                {
+                    EbtData = new Ebt {
+                        EbtType = "EBTFOODSTAMPSALE",
+                        FnsNumber = "1234567"
+                    }
+                }
+            };
+
+            var apiContext = new APIContext();
+            var controller = new PaymentsController();
+
+            // Act
+            var response = controller.ProcessRequest<ChargeResponse>(apiContext, request);
+
+            // Assert
+            Assert.IsNotNull(response);
+            Assert.IsTrue(response.Success);
+        }
+
+        /// <summary>
+        /// Successful response returned from a EBT Card Not Present Capture request (voucher sale).
+        /// https://apidocs.securenet.com/docs/creditcardnotpresent.html?lang=json#capture
+        /// </summary>
+        [TestMethod]
+        public void Ebt_Card_Not_Present_Capture_Request_Returns_Successfully()
+        {
+            // Arrange
+            var request = new CaptureRequest
+            {
+                Amount = 11.00m,
+                Card = new Card
+                {
+                    Number = "5081480000001235",
+                    ExpirationDate = "12/20",
+                    Address = new Address()
+                    {
+                        Line1 = "123 Main St.",
+                        City = "Austin",
+                        State = "TX",
+                        Zip = "78759"
+                    },
+                    FirstName = "Bob",
+                    LastName = "Dollar"
+                },
+                DeveloperApplication = new DeveloperApplication
+                {
+                    DeveloperId = 12345678,
+                    Version = "1.2"
+                },
+                ExtendedInformation = new ExtendedInformation
+                {
+                    EbtData = new Ebt
+                    {
+                        EbtType = "EBTVOUCHERSale",
+                        VoucherNumber = "999888777666555",
+                        FnsNumber = "1234567"
+                    }
+                },
+                AuthorizationCode = "Z12345"
+            };
+
+            var apiContext = new APIContext();
+            var controller = new PaymentsController();
+
+            // Act
+            var response = controller.ProcessRequest<ChargeResponse>(apiContext, request);
+
+            // Assert
+            Assert.IsNotNull(response);
+            Assert.IsTrue(response.Success);
+        }
+
+        /// <summary>
+        /// Successful response returned from a EBT Card Present Credit request.
+        /// https://apidocs.securenet.com/docs/credits.html?lang=json#content
+        /// </summary>
+        [TestMethod]
+        public void Ebt_Card_Present_Credit_Request_Returns_Successfully()
+        {
+            // Arrange
+            var request = new CreditRequest
+            {
+                Amount = 11.00m,
+                Card = new Card
+                {
+                    TrackData = ";5081480000001235=20121000000112345678?",
+                    PinBlock = "B50CBCC24FC053EC",
+                    Ksn = "10002000090002A00039"
+                },
+                DeveloperApplication = new DeveloperApplication
+                {
+                    DeveloperId = 12345678,
+                    Version = "1.2"
+                },
+                ExtendedInformation = new ExtendedInformation
+                {
+                    EbtData = new Ebt
+                    {
+                        EbtType = "EBTFOODSTAMPREFUND",
+                        FnsNumber = "1234567"
+                    }
+                }
+            };
+
+            var apiContext = new APIContext();
+            var controller = new PaymentsController();
+
+            // Act
+            var response = controller.ProcessRequest<ChargeResponse>(apiContext, request);
+
+            // Assert
+            Assert.IsNotNull(response);
+            Assert.IsTrue(response.Success);
+        }
+
+        #region Ebt Void
+
+        /// <summary>
+        /// Unit Tests for a Ebt Charge request and a subsequent Void request. Tests combined in one method to pass the
+        /// required transaction identifier and guarantee the order of operation.
+        /// </summary>
+        [TestMethod]
+        public void Voids_Ebt_Charge_Request_Returns_Successfully()
+        {
+            int transactionId = Ebt_Charge_Request_Returns_TransactionId_Successfully();
+
+            Voids_Ebt_Charge_Request_And_Returns_Successfully(transactionId);
+        }
+
+        /// <summary>
+        /// Successful response returned from a Ebt Card Present Charge request.
+        /// https://apidocs.securenet.com/docs/creditcardpresent.html?lang=JSON#charge
+        /// </summary>
+        public int Ebt_Charge_Request_Returns_TransactionId_Successfully()
+        {
+            // Arrange
+            var request = new ChargeRequest
+            {
+                Amount = 11.00m,
+                Card = new Card
+                {
+                    TrackData = ";5081480000001235=20121000000112345678?",
+                    PinBlock = "B50CBCC24FC053EC",
+                    Ksn = "10002000090002A00039"
+                },
+                DeveloperApplication = new DeveloperApplication
+                {
+                    DeveloperId = 12345678,
+                    Version = "1.2"
+                },
+                ExtendedInformation = new ExtendedInformation
+                {
+                    EbtData = new Ebt
+                    {
+                        EbtType = "EBTFOODSTAMPSALE",
+                        FnsNumber = "1234567"
+                    }
+                }
+            };
+
+            var apiContext = new APIContext();
+            var controller = new PaymentsController();
+
+            // Act
+            var response = controller.ProcessRequest<ChargeResponse>(apiContext, request);
+
+            // Assert
+            Assert.IsNotNull(response);
+            Assert.IsTrue(response.Success);
+            Assert.IsNotNull(response.Transaction);
+            Assert.IsTrue(response.Transaction.TransactionId > 0);
+
+            return response.Transaction.TransactionId;
+        }
+
+        /// <summary>
+        /// Successful response returned from a Void Transaction request.
+        /// https://apidocs.securenet.com/docs/voids.html?lang=csharp
+        /// </summary>
+        public void Voids_Ebt_Charge_Request_And_Returns_Successfully(int transactionId)
+        {
+            // Arrange
+            var request = new VoidRequest
+            {
+                TransactionId = transactionId,
+                DeveloperApplication = new DeveloperApplication
+                {
+                    DeveloperId = 12345678,
+                    Version = "1.2"
+                }
+            };
+
+            var apiContext = new APIContext();
+            var controller = new PaymentsController();
+
+            // Act
+            var response = controller.ProcessRequest<VoidResponse>(apiContext, request);
+
+            // Assert
+            Assert.IsNotNull(response);
+            Assert.IsTrue(response.Success);
+        }
+
+        #endregion  Ebt Void
+
+        #region Ebt Refund for voucher sale
+
+        /// <summary>
+        /// Unit Tests for a Ebt Capture request and a subsequent Refund request. Tests combined in one method to pass the
+        /// required transaction identifier and guaranteee the order of operation.
+        /// </summary>
+        [TestMethod]
+        public void Refunds_Ebt_Capture_Request_Returns_Successfully()
+        {
+            int transactionId = Ebt_Capture_Request_Returns_TransactionId_Successfully();
+            Refunds_Ebt_Capture_Request_And_Returns_Successfully(transactionId);
+        }
+
+        /// <summary>
+        /// Successful response returned from a Ebt Card Not Present Capture request.
+        /// https://apidocs.securenet.com/docs/creditcardpresent.html?lang=JSON#charge
+        /// </summary>
+        public int Ebt_Capture_Request_Returns_TransactionId_Successfully()
+        {
+            // Arrange
+            var request = new CaptureRequest
+            {
+                Amount = 11.00m,
+                Card = new Card
+                {
+                    Number = "5081480000001235",
+                    ExpirationDate = "12/20",
+                    Address = new Address()
+                    {
+                        Line1 = "123 Main St.",
+                        City = "Austin",
+                        State = "TX",
+                        Zip = "78759"
+                    },
+                    FirstName = "Bob",
+                    LastName = "Dollar"
+                },
+                DeveloperApplication = new DeveloperApplication
+                {
+                    DeveloperId = 12345678,
+                    Version = "1.2"
+                },
+                ExtendedInformation = new ExtendedInformation
+                {
+                    EbtData = new Ebt
+                    {
+                        EbtType = "EBTVOUCHERSale",
+                        VoucherNumber = "999888777666555",
+                        FnsNumber = "1234567"
+                    }
+                },
+                AuthorizationCode = "Z12345"
+            };
+
+            var apiContext = new APIContext();
+            var controller = new PaymentsController();
+
+            // Act
+            var response = controller.ProcessRequest<ChargeResponse>(apiContext, request);
+
+            // Assert
+            Assert.IsNotNull(response);
+            Assert.IsTrue(response.Success);
+            Assert.IsNotNull(response.Transaction);
+            Assert.IsTrue(response.Transaction.TransactionId > 0);
+
+            return response.Transaction.TransactionId;
+        }
+
+        /// <summary>
+        /// Successful response returned from a Refund Transaction request.
+        /// https://apidocs.securenet.com/docs/voids.html?lang=csharp
+        /// </summary>
+        public void Refunds_Ebt_Capture_Request_And_Returns_Successfully(int transactionId)
+        {
+            // Arrange
+            var request = new RefundRequest
+            {
+                TransactionId = transactionId,
+                DeveloperApplication = new DeveloperApplication
+                {
+                    DeveloperId = 12345678,
+                    Version = "1.2"
+                }
+            };
+
+            var apiContext = new APIContext();
+            var controller = new PaymentsController();
+
+            // Act
+            var response = controller.ProcessRequest<ChargeResponse>(apiContext, request);
+
+            // Assert
+            Assert.IsNotNull(response);
+            Assert.IsTrue(response.Success);
+        }
+
+        #endregion  Ebt Refund for voucher sale
+
+        #endregion Ebt
+       */
     }
 }
